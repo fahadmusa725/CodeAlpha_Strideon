@@ -45,14 +45,14 @@
   font-family: var(--font-heading);
   font-size: 2rem;
   letter-spacing: 0.1em;
-  color: var(--clr-text);
+  color: #f5f5f7 !important;
   line-height: 1;
   display: block;
 }
 
 .footer__tagline {
   font-size: 0.875rem;
-  color: var(--clr-text-secondary);
+  color: #9e9ea7 !important;
   line-height: 1.7;
 }
 
@@ -72,7 +72,7 @@
   border-radius: 50%;
   border: 1px solid #2a2a2a;
   background: #181818;
-  color: var(--clr-text-secondary);
+  color: #a0a0ab !important;
   transition: all var(--transition-base);
 }
 
@@ -83,7 +83,7 @@
 
 .footer__social-link:hover {
   border-color: var(--clr-orange);
-  color: var(--clr-orange);
+  color: var(--clr-orange) !important;
   background: rgba(255, 77, 0, 0.08);
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(255, 77, 0, 0.2);
@@ -116,13 +116,13 @@
 
 .footer__col a {
   font-size: 0.875rem;
-  color: var(--clr-text-secondary);
+  color: #9e9ea7 !important;
   transition: color var(--transition-fast);
   letter-spacing: 0.02em;
 }
 
 .footer__col a:hover {
-  color: var(--clr-text);
+  color: #ffffff !important;
 }
 
 /* ── Newsletter column ────────────────────────────────── */
@@ -134,7 +134,7 @@
 
 .footer__newsletter-desc {
   font-size: 0.8rem;
-  color: var(--clr-text-secondary);
+  color: #9e9ea7 !important;
   line-height: 1.6;
 }
 
@@ -156,14 +156,14 @@
   background: #181818;
   border: none;
   padding: 0.7rem 1rem;
-  color: var(--clr-text);
+  color: #f5f5f7 !important;
   font-size: 0.85rem;
   outline: none;
   min-width: 0;
 }
 
 .footer__newsletter-input::placeholder {
-  color: var(--clr-muted);
+  color: #6e6e78 !important;
 }
 
 .footer__newsletter-btn {
@@ -210,7 +210,7 @@
 
 .footer__copy {
   font-size: 0.78rem;
-  color: var(--clr-muted);
+  color: #6e6e78 !important;
 }
 
 .footer__legal-links {
@@ -220,12 +220,12 @@
 
 .footer__legal-links a {
   font-size: 0.78rem;
-  color: var(--clr-muted);
+  color: #6e6e78 !important;
   transition: color var(--transition-fast);
 }
 
 .footer__legal-links a:hover {
-  color: var(--clr-text-secondary);
+  color: #b0b0ba !important;
 }
 
 /* ── Responsive ───────────────────────────────────────── */

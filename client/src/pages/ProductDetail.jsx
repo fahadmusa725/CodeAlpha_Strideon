@@ -213,8 +213,8 @@ export default function ProductDetail() {
       {related.length > 0 && (
         <section className="section related-section">
           <h2 className="text-headline" style={{ marginBottom: '1.5rem' }}>You Might Also Like</h2>
-          <div className="grid-3">
-            {related.map((item) => (
+          <div className="grid-4">
+            {related.slice(0, 4).map((item) => (
               <ProductCard key={item._id} product={item} />
             ))}
           </div>
