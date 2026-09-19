@@ -90,10 +90,10 @@ export default function Footer() {
 
             <div className="footer__col">
               <h4 className="footer__col-heading">Brand</h4>
-              <a href="#">About</a>
-              <a href="#">Sustainability</a>
-              <a href="#">Careers</a>
-              <a href="#">Contact</a>
+              <Link to="/about">About Us</Link>
+              <Link to="/about#pillars">Sustainability</Link>
+              <Link to="/about#careers">Careers</Link>
+              <Link to="/contact">Contact</Link>
             </div>
           </div>
 
