@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { CartContext } from '../../context/CartContext';
 import { useTheme } from '../../context/ThemeContext';
@@ -13,12 +13,29 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const navRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Close mobile menu when route changes or user clicks outside
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleClickOutside = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [menuOpen]);
 
   const handleLogout = () => {
     logout();
@@ -27,14 +44,23 @@ export default function Navbar() {
   };
 
   return (
-    <header className={`navbar ${scrolled ? 'navbar--solid' : ''}`}>
-      <div className="container navbar__inner">
-        <Link to="/" className="navbar__logo" onClick={() => setMenuOpen(false)}>
-          <span className="navbar__logo-text">STRIDEON</span>
-          <span className="navbar__logo-tag">NYC</span>
-        </Link>
+    <>
+      {/* Mobile backdrop */}
+      {menuOpen && (
+        <div
+          className="navbar__backdrop"
+          onClick={() => setMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+      <header ref={navRef} className={`navbar ${scrolled ? 'navbar--solid' : ''}`}>
+        <div className="container navbar__inner">
+          <Link to="/" className="navbar__logo" onClick={() => setMenuOpen(false)}>
+            <span className="navbar__logo-text">STRIDEON</span>
+            <span className="navbar__logo-tag">NYC</span>
+          </Link>
 
-        <nav className={`navbar__links ${menuOpen ? 'navbar__links--open' : ''}`}>
+          <nav className={`navbar__links ${menuOpen ? 'navbar__links--open' : ''}`}>
           <NavLink
             to="/"
             end
@@ -134,7 +160,8 @@ export default function Navbar() {
           <button
             className="navbar__hamburger"
             onClick={() => setMenuOpen((p) => !p)}
-            aria-label="Toggle menu"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
             id="hamburger-btn"
           >
             <span className={`hamburger-line ${menuOpen ? 'open' : ''}`} />
@@ -144,6 +171,7 @@ export default function Navbar() {
         </div>
       </div>
     </header>
+    </>
   );
 }
 

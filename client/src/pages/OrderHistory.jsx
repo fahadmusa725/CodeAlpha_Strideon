@@ -12,6 +12,7 @@ export default function OrderHistory() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [stripeSuccess, setStripeSuccess] = useState(false);
+  const [verifyError, setVerifyError] = useState(false);
 
   useEffect(() => {
     const handleStripeReturn = async () => {
@@ -19,20 +20,31 @@ export default function OrderHistory() {
       const orderId = searchParams.get('order_id');
 
       if (sessionId && orderId) {
+        console.log('[OrderHistory] Stripe redirect detected — verifying session:', { sessionId, orderId });
         try {
-          await api.post('/orders/verify-session', { sessionId, orderId });
+          const { data } = await api.post('/orders/verify-session', { sessionId, orderId });
+          console.log('[OrderHistory] verify-session response:', data);
           await fetchCart();
           setStripeSuccess(true);
-          // Remove query params from URL without reload
+          // Remove Stripe query params from URL without a full reload
           setSearchParams({});
         } catch (err) {
-          console.error('Failed to verify checkout session:', err);
+          const status = err?.response?.status;
+          const message = err?.response?.data?.message || err.message;
+          console.error('[OrderHistory] verify-session failed — status:', status, 'message:', message, err);
+          // Only show error banner if it wasn't already verified (idempotency)
+          if (status !== 400) {
+            setVerifyError(true);
+          }
+          // Still remove params so user doesn't loop on refresh
+          setSearchParams({});
         }
       }
       fetchOrders();
     };
 
     handleStripeReturn();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchOrders = async () => {
@@ -81,6 +93,16 @@ export default function OrderHistory() {
           <div>
             <h3>Payment Confirmed & Order Placed!</h3>
             <p className="text-sm">Your order has been logged and is currently processing in our warehouse.</p>
+          </div>
+        </div>
+      )}
+
+      {verifyError && (
+        <div className="order-success-banner" style={{ borderColor: 'var(--clr-warning)', background: 'rgba(245,158,11,0.08)' }}>
+          <span className="order-success-banner__icon">⚠️</span>
+          <div>
+            <h3 style={{ color: 'var(--clr-warning)' }}>Payment verification encountered an issue</h3>
+            <p className="text-sm">Your payment may still have been processed. Please refresh in a moment or contact support if your order still shows as Pending.</p>
           </div>
         </div>
       )}
