@@ -251,6 +251,10 @@
   color: var(--clr-error);
 }
 
+.navbar__mobile-auth {
+  display: none;
+}
+
 .navbar__hamburger {
   display: none;
   flex-direction: column;
@@ -274,27 +278,67 @@
 }
 
 @media (max-width: 768px) {
+  .navbar {
+    height: var(--navbar-height, 80px);
+  }
+
+  .navbar__inner {
+    gap: 0.5rem;
+    justify-content: space-between;
+  }
+
+  .navbar__logo-text {
+    font-size: 1.25rem;
+  }
+
+  .navbar__logo-tag {
+    font-size: 0.55rem;
+    padding: 0.12rem 0.3rem;
+  }
+
+  .navbar__actions {
+    gap: 0.4rem;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* Hide desktop Sign In button in top bar on mobile so it doesn't push the hamburger off screen */
+  .navbar__actions > .btn {
+    display: none;
+  }
+
+  .navbar__icon-btn {
+    width: 2.35rem;
+    height: 2.35rem;
+  }
+
   .navbar__hamburger {
     display: flex;
-    width: 2.5rem;
-    height: 2.5rem;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    gap: 4px;
+    width: 2.35rem;
+    height: 2.35rem;
+    min-width: 2.35rem;
     background: var(--clr-surface);
     border: 1px solid var(--clr-border);
     border-radius: var(--radius-sm);
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+    z-index: 101;
     transition: border-color var(--transition-fast), background var(--transition-fast);
   }
 
   .navbar__hamburger:hover {
     border-color: var(--clr-orange);
-    color: var(--clr-orange);
   }
 
   /* Animated hamburger → X */
   .hamburger-line {
     display: block;
-    width: 20px;
+    width: 18px;
     height: 2px;
     background: var(--clr-text);
     border-radius: 1px;
@@ -303,7 +347,7 @@
   }
 
   .hamburger-line:nth-child(1).open {
-    transform: translateY(7px) rotate(45deg);
+    transform: translateY(6px) rotate(45deg);
   }
 
   .hamburger-line:nth-child(2).open {
@@ -312,7 +356,7 @@
   }
 
   .hamburger-line:nth-child(3).open {
-    transform: translateY(-7px) rotate(-45deg);
+    transform: translateY(-6px) rotate(-45deg);
   }
 
   /* Mobile nav drawer */
@@ -329,10 +373,12 @@
     flex-direction: column;
     align-items: stretch;
     padding: 1.25rem 1.5rem 2rem;
-    gap: 0.25rem;
-    transform: translateY(-110%);
-    transition: transform var(--transition-base);
+    gap: 0.35rem;
+    transform: translateY(-10px);
+    opacity: 0;
+    visibility: hidden;
     pointer-events: none;
+    transition: transform var(--transition-base), opacity var(--transition-base), visibility var(--transition-base);
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
     z-index: 99;
   }
@@ -343,6 +389,8 @@
 
   .navbar__links--open {
     transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
     pointer-events: all;
   }
 
@@ -356,13 +404,18 @@
     border-left: none;
     border-top: 1px solid var(--clr-border);
     padding-top: 1rem;
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
   }
 
   .category-pill-label {
     display: block;
     width: 100%;
     margin-bottom: 0.25rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--clr-muted);
+    font-weight: 700;
   }
 
   .nav-link {
@@ -375,5 +428,48 @@
   .nav-pill {
     font-size: 0.8rem;
     padding: 0.35rem 0.75rem;
+  }
+
+  .navbar__mobile-auth {
+    display: block;
+    border-top: 1px solid var(--clr-border);
+    padding-top: 1rem;
+    margin-top: 0.75rem;
+  }
+
+  .navbar__mobile-auth-btn {
+    width: 100%;
+    text-align: center;
+    padding: 0.85rem 1rem;
+    display: flex;
+  }
+
+  .navbar__mobile-user-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .navbar__mobile-user-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .navbar__mobile-user-name {
+    font-weight: 700;
+    color: var(--clr-text);
+  }
+
+  .navbar__mobile-user-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .navbar__mobile-logout {
+    color: var(--clr-error);
+    text-align: left;
   }
 }

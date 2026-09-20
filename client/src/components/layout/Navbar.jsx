@@ -99,6 +99,38 @@ export default function Navbar() {
             <NavLink to="/products?category=Lifestyle" className="nav-pill" onClick={() => setMenuOpen(false)}>Lifestyle</NavLink>
             <NavLink to="/products?category=Skate" className="nav-pill" onClick={() => setMenuOpen(false)}>Skate</NavLink>
           </div>
+
+          <div className="navbar__mobile-auth">
+            {user ? (
+              <div className="navbar__mobile-user-box">
+                <div className="navbar__mobile-user-header">
+                  <span className="user-avatar">{user.name[0].toUpperCase()}</span>
+                  <span className="navbar__mobile-user-name">{user.name}</span>
+                </div>
+                <div className="navbar__mobile-user-actions">
+                  <Link to="/orders" className="nav-link" onClick={() => setMenuOpen(false)}>
+                    Order History
+                  </Link>
+                  {user.role === 'admin' && (
+                    <Link to="/admin" className="nav-link" onClick={() => setMenuOpen(false)}>
+                      Admin Dashboard
+                    </Link>
+                  )}
+                  <button className="nav-link navbar__mobile-logout" onClick={() => { handleLogout(); setMenuOpen(false); }}>
+                    Log Out
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="btn btn-primary navbar__mobile-auth-btn"
+                onClick={() => setMenuOpen(false)}
+              >
+                Sign In
+              </Link>
+            )}
+          </div>
         </nav>
 
         <div className="navbar__actions">
