@@ -32,7 +32,6 @@ export default function Home() {
 
   return (
     <div className="home">
-      {/* Hero Section */}
       <section className="hero">
         <div className="hero__glow-sphere" aria-hidden="true" />
         
@@ -67,7 +66,6 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Hero Quick Stats */}
           <div className="hero__stats-row">
             <div className="hero-stat-item">
               <strong>100%</strong>
@@ -86,7 +84,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Hero Visual Graphic element */}
         <div className="hero__visual-wrap" aria-hidden="true">
           <div className="hero__floating-card hero__floating-card--1">
             <span className="floating-tag">NYC // SOHO</span>
@@ -105,7 +102,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Value Perks Strip */}
       <section className="perks-strip">
         <div className="container perks-grid">
           {PERKS.map((perk, idx) => (
@@ -120,7 +116,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Drops — 4 cards per row */}
       <section className="section container">
         <div className="section-header">
           <div>
@@ -142,7 +137,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Categories Grid */}
       <section className="section container" style={{ paddingTop: '1rem' }}>
         <div className="section-header" style={{ marginBottom: '2rem' }}>
           <div>
@@ -177,7 +171,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Editorial Streetwear Banner */}
       <section className="section container" style={{ paddingTop: '1rem' }}>
         <div className="editorial-banner">
           <div className="editorial-banner__content">
@@ -211,7 +204,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Marquee strip */}
       <div className="marquee-strip" aria-hidden="true">
         <div className="marquee-track">
           {['STRIDEON', 'AUTHENTIC ONLY', 'NEW DROPS', 'PREMIUM KICKS', 'STREET CULTURE', 'LIMITED PRODUCTION', 'MOVE DIFFERENT'].map(

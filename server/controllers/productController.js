@@ -33,7 +33,6 @@ const getProducts = async (req, res, next) => {
 
 const getProduct = async (req, res, next) => {
   try {
-    // Accept slug or ObjectId
     const { id } = req.params;
     const product = id.match(/^[a-f\d]{24}$/i)
       ? await Product.findById(id)

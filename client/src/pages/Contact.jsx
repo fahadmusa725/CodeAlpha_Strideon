@@ -63,7 +63,6 @@ export default function Contact() {
       </div>
 
       <div className="contact-layout">
-        {/* Contact Info Sidebar */}
         <aside className="contact-info-panel">
           <div className="contact-info-block">
             <h3 className="contact-info-title">Headquarters</h3>
@@ -99,7 +98,6 @@ export default function Contact() {
           </div>
         </aside>
 
-        {/* Contact Form */}
         <main className="contact-form-card">
           {submitted ? (
             <div className="contact-success-state">

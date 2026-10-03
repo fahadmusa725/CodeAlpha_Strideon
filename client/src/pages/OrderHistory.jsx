@@ -20,18 +20,15 @@ export default function OrderHistory() {
       const orderId = searchParams.get('order_id');
 
       if (sessionId && orderId) {
-        console.log('[OrderHistory] Stripe redirect detected — verifying session:', { sessionId, orderId });
         try {
-          const { data } = await api.post('/orders/verify-session', { sessionId, orderId });
-          console.log('[OrderHistory] verify-session response:', data);
+          await api.post('/orders/verify-session', { sessionId, orderId });
           await fetchCart();
           setStripeSuccess(true);
-          // Remove Stripe query params from URL without a full reload
           setSearchParams({});
         } catch (err) {
           const status = err?.response?.status;
           const message = err?.response?.data?.message || err.message;
-          console.error('[OrderHistory] verify-session failed — status:', status, 'message:', message, err);
+          console.error('[OrderHistory] verify-session failed; status:', status, 'message:', message, err);
           // Only show error banner if it wasn't already verified (idempotency)
           if (status !== 400) {
             setVerifyError(true);

@@ -35,7 +35,6 @@ export default function ProductDetail() {
       if (data.colorways?.length) setSelectedColor(data.colorways[0]);
       if (data.sizes?.length) setSelectedSize(data.sizes[0]);
 
-      // fetch related products in same category
       const relRes = await api.get(`/products?category=${data.category}&limit=3`);
       setRelated(relRes.data.products.filter((p) => p._id !== data._id));
     } catch (err) {
@@ -92,13 +91,11 @@ export default function ProductDetail() {
 
   return (
     <div className="product-detail container">
-      {/* Breadcrumb */}
       <nav className="breadcrumb text-sm text-muted">
         <Link to="/">Home</Link> / <Link to={`/products?category=${product.category}`}>{product.category}</Link> / <span>{product.name}</span>
       </nav>
 
       <div className="product-detail__grid">
-        {/* Gallery */}
         <div className="gallery-section">
           <div className="gallery-main">
             <img
@@ -122,7 +119,6 @@ export default function ProductDetail() {
           )}
         </div>
 
-        {/* Product Details & Purchase Form */}
         <div className="product-info-section">
           <p className="text-upper text-orange text-sm">{product.brand}</p>
           <h1 className="product-title">{product.name}</h1>
@@ -130,7 +126,6 @@ export default function ProductDetail() {
 
           <p className="product-desc">{product.description}</p>
 
-          {/* Colorways */}
           {product.colorways?.length > 0 && (
             <div className="detail-option-group">
               <label className="detail-option-label">
@@ -150,7 +145,6 @@ export default function ProductDetail() {
             </div>
           )}
 
-          {/* Sizes */}
           {product.sizes?.length > 0 && (
             <div className="detail-option-group">
               <div className="flex justify-between items-center">
@@ -184,7 +178,6 @@ export default function ProductDetail() {
             </div>
           )}
 
-          {/* Actions */}
           <div className="product-actions" style={{ marginTop: '2rem' }}>
             <button
               className="btn btn-primary btn-lg btn-full"
@@ -209,7 +202,6 @@ export default function ProductDetail() {
         </div>
       </div>
 
-      {/* Related Products */}
       {related.length > 0 && (
         <section className="section related-section">
           <h2 className="text-headline" style={{ marginBottom: '1.5rem' }}>You Might Also Like</h2>

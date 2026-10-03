@@ -12,7 +12,6 @@ export default function CartDrawer() {
 
   return (
     <>
-      {/* Backdrop */}
       <div
         className={`drawer-backdrop ${drawerOpen ? 'drawer-backdrop--visible' : ''}`}
         onClick={() => setDrawerOpen(false)}

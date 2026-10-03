@@ -30,7 +30,6 @@ export default function Cart() {
       <h1 className="text-headline" style={{ marginBottom: '2rem' }}>Shopping Bag ({cart.items.length})</h1>
 
       <div className="cart-page__layout">
-        {/* Item List */}
         <div className="cart-page__list">
           {cart.items.map((item, idx) => {
             const product = item.product;
@@ -90,7 +89,6 @@ export default function Cart() {
           })}
         </div>
 
-        {/* Order Summary */}
         <aside className="cart-page__summary">
           <h2 className="summary-title">Order Summary</h2>
 

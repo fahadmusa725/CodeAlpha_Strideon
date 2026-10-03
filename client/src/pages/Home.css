@@ -18,7 +18,6 @@
   50% { opacity: 0.4; transform: scale(0.85); }
 }
 
-/* ---- Hero ---- */
 .hero {
   min-height: calc(100vh - var(--navbar-height, 80px));
   display: flex;
@@ -125,7 +124,6 @@
   transition: transform var(--transition-fast);
 }
 
-/* Hero Quick Stats Row */
 .hero__stats-row {
   display: flex;
   align-items: center;
@@ -161,7 +159,6 @@
   background: var(--clr-border);
 }
 
-/* Floating graphical elements */
 .hero__visual-wrap {
   position: absolute;
   right: 5%;
@@ -233,7 +230,6 @@
   animation: fadeSlideUp 1s ease 0.5s both;
 }
 
-/* ---- Perks Strip ---- */
 .perks-strip {
   background: var(--clr-surface);
   border-bottom: 1px solid var(--clr-border);
@@ -275,7 +271,6 @@
   color: var(--clr-text-secondary);
 }
 
-/* ---- Categories Grid ---- */
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -353,7 +348,6 @@
   transform: translateX(5px);
 }
 
-/* ---- Section Header ---- */
 .section-header {
   display: flex;
   align-items: flex-end;
@@ -362,7 +356,6 @@
   flex-wrap: wrap;
 }
 
-/* ---- Editorial Banner ---- */
 .editorial-banner {
   background: linear-gradient(135deg, var(--clr-surface) 0%, var(--clr-surface-2) 100%);
   border: 1px solid var(--clr-border);
@@ -441,7 +434,6 @@
   margin-top: 0.5rem;
 }
 
-/* ---- Marquee ---- */
 .marquee-strip {
   overflow: hidden;
   border-top: 1px solid var(--clr-border);

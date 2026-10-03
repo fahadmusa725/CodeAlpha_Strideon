@@ -76,7 +76,6 @@ export default function Checkout() {
       });
 
       if (data.url) {
-        // Redirect to Stripe Hosted Checkout
         window.location.href = data.url;
       } else {
         // Fallback for simulated checkout mode
@@ -111,7 +110,6 @@ export default function Checkout() {
       )}
 
       <form onSubmit={handleSubmit} className="checkout-page__layout">
-        {/* Shipping Form */}
         <div className="checkout-form-area">
           <div className="checkout-card">
             <h2 className="checkout-section-title">Shipping Address</h2>
@@ -215,7 +213,6 @@ export default function Checkout() {
           </div>
         </div>
 
-        {/* Order Preview */}
         <aside className="checkout-summary">
           <h2 className="summary-title">Items ({cart.items.length})</h2>
 

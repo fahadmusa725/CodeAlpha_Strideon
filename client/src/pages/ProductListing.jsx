@@ -98,7 +98,6 @@ export default function ProductListing() {
       </div>
 
       <div className="product-listing__grid-layout">
-        {/* Filters Sidebar */}
         <aside className="filters-sidebar">
           <div className="filters-sidebar__head">
             <h3 className="filters-sidebar__title">Filters</h3>
@@ -107,7 +106,6 @@ export default function ProductListing() {
             </button>
           </div>
 
-          {/* Category Filter */}
           <div className="filter-group">
             <h4 className="filter-group__title">Category</h4>
             <div className="filter-chips">
@@ -123,7 +121,6 @@ export default function ProductListing() {
             </div>
           </div>
 
-          {/* Price Range Filter */}
           <div className="filter-group">
             <div className="flex justify-between items-center" style={{ marginBottom: '0.5rem' }}>
               <h4 className="filter-group__title">Max Price</h4>
@@ -146,7 +143,6 @@ export default function ProductListing() {
             </div>
           </div>
 
-          {/* Size Filter */}
           <div className="filter-group">
             <h4 className="filter-group__title">Size (US)</h4>
             <div className="size-filter-grid">
@@ -163,7 +159,6 @@ export default function ProductListing() {
           </div>
         </aside>
 
-        {/* Product Grid Area */}
         <main className="product-grid-area">
           {loading ? (
             <div className="grid-3">

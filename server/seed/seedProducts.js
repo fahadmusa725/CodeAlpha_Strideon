@@ -114,7 +114,7 @@ const products = [
     slug: 'harden-vol-8',
     category: 'Basketball',
     description:
-      'Stepback, fadeaway, pull-up — the Harden Vol. 8 handles it all. Full-length Bounce Pro midsole absorbs court contact on those long-distance jumpers and still kicks back energy when it counts.',
+      'Stepback, fadeaway, pull-up. The Harden Vol. 8 handles it all. Full-length Bounce Pro midsole absorbs court contact on those long-distance jumpers and still kicks back energy when it counts.',
     price: 159.99,
     images: [
       'https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=800',
@@ -300,18 +300,23 @@ async function seed() {
   await Product.insertMany(products);
   console.log(`Seeded ${products.length} products`);
 
-  // Upsert admin account
-  const existing = await User.findOne({ email: 'admin@strideon.com' });
-  if (!existing) {
-    await User.create({
-      name: 'Strideon Admin',
-      email: 'admin@strideon.com',
-      passwordHash: 'REDACTED_PASSWORD',
-      role: 'admin',
-    });
-    console.log('Created admin user: admin@strideon.com / REDACTED_PASSWORD');
+  const adminEmail = process.env.SEED_ADMIN_EMAIL;
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD;
+  if (!adminEmail || !adminPassword) {
+    console.log('Skipping admin user: set SEED_ADMIN_EMAIL and SEED_ADMIN_PASSWORD');
   } else {
-    console.log('Admin user already exists');
+    const existing = await User.findOne({ email: adminEmail });
+    if (!existing) {
+      await User.create({
+        name: 'Strideon Admin',
+        email: adminEmail,
+        passwordHash: adminPassword,
+        role: 'admin',
+      });
+      console.log(`Created admin user: ${adminEmail}`);
+    } else {
+      console.log('Admin user already exists');
+    }
   }
 
   await mongoose.disconnect();

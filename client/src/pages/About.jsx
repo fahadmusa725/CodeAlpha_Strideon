@@ -34,7 +34,6 @@ const VALUES = [
 export default function About() {
   return (
     <div className="about-page">
-      {/* Hero Banner */}
       <section className="about-hero">
         <div className="container about-hero__content">
           <span className="badge badge-orange about-hero__badge">Origin & Manifesto</span>
@@ -49,7 +48,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Stats Counter Bar */}
       <section className="about-stats-bar">
         <div className="container about-stats-grid">
           {STATS.map((s, idx) => (
@@ -61,7 +59,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Brand Story Section */}
       <section className="section container">
         <div className="about-story-grid">
           <div className="about-story__text">
@@ -98,7 +95,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Core Values / Pillars */}
       <section className="section container" style={{ paddingTop: '0' }}>
         <div className="section-header" style={{ marginBottom: '2.5rem' }}>
           <div>
@@ -118,7 +114,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Call to Action */}
       <section className="about-cta-section container">
         <div className="about-cta-card">
           <h2 className="text-headline">READY TO LEVEL UP YOUR ROTATION?</h2>

@@ -21,7 +21,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close mobile menu when route changes or user clicks outside
   useEffect(() => {
     if (!menuOpen) return;
     const handleClickOutside = (e) => {
@@ -45,7 +44,6 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Mobile backdrop */}
       {menuOpen && (
         <div
           className="navbar__backdrop"
@@ -134,7 +132,6 @@ export default function Navbar() {
         </nav>
 
         <div className="navbar__actions">
-          {/* Theme Toggle Button */}
           <button
             id="theme-toggle-btn"
             className="navbar__icon-btn theme-toggle-btn"

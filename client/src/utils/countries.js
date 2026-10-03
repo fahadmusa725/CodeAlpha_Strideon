@@ -1,4 +1,3 @@
-// Full list of ~195 sovereign countries (ISO 3166-1 common names)
 const COUNTRIES = [
   'Afghanistan',
   'Albania',

@@ -33,7 +33,6 @@ const createCheckoutSession = async (req, res, next) => {
     const subtotal = items.reduce((sum, i) => sum + i.price * i.qty, 0);
     const shippingCost = subtotal > 150 ? 0 : 15;
 
-    // If Stripe secret key is configured, create a real Stripe Checkout Session
     if (stripe) {
       const line_items = items.map((item) => ({
         price_data: {
@@ -61,7 +60,6 @@ const createCheckoutSession = async (req, res, next) => {
         });
       }
 
-      // Create pre-order record in Pending status
       const order = await Order.create({
         user: req.user._id,
         items,
@@ -92,7 +90,6 @@ const createCheckoutSession = async (req, res, next) => {
       return res.json({ url: session.url, sessionId: session.id, orderId: order._id });
     }
 
-    // If Stripe is not configured, fall back to simulated instant placement
     const order = await Order.create({
       user: req.user._id,
       items,

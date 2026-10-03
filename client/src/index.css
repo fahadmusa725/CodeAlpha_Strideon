@@ -1,12 +1,5 @@
-/* ============================================================
-   STRIDEON — Design System
-   Dark urban streetwear aesthetic
-   ============================================================ */
-
-/* --- Fonts ------------------------------------------------- */
 /* Space Grotesk (body/UI) + Archivo Black (headings) loaded in index.html */
 
-/* --- CSS Custom Properties --------------------------------- */
 :root {
   --clr-bg: #0a0a0a;
   --clr-surface: #141414;
@@ -59,7 +52,6 @@
   --shadow-elevated: 0 16px 40px rgba(0, 0, 0, 0.1);
 }
 
-/* --- Reset ------------------------------------------------- */
 *,
 *::before,
 *::after {
@@ -112,7 +104,6 @@ ol {
   list-style: none;
 }
 
-/* --- Typography -------------------------------------------- */
 h1,
 h2,
 h3,
@@ -168,7 +159,6 @@ h4 {
   font-weight: 600;
 }
 
-/* --- Layout ------------------------------------------------ */
 .main-content {
   flex: 1;
   display: flex;
@@ -191,7 +181,6 @@ h4 {
   padding: 3rem 0;
 }
 
-/* --- Buttons ----------------------------------------------- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -262,7 +251,6 @@ h4 {
   width: 100%;
 }
 
-/* --- Forms ------------------------------------------------- */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -327,7 +315,6 @@ h4 {
   border-color: var(--clr-orange);
 }
 
-/* --- Cards ------------------------------------------------- */
 .card {
   background: var(--clr-surface);
   border: 1px solid var(--clr-border);
@@ -335,7 +322,6 @@ h4 {
   overflow: hidden;
 }
 
-/* --- Badges ------------------------------------------------ */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -372,14 +358,12 @@ h4 {
   color: var(--clr-error);
 }
 
-/* --- Divider ----------------------------------------------- */
 .divider {
   height: 1px;
   background: var(--clr-border);
   border: none;
 }
 
-/* --- Animations -------------------------------------------- */
 @keyframes fadeSlideUp {
   from {
     opacity: 0;
@@ -419,7 +403,6 @@ h4 {
   animation: fadeSlideUp 0.5s ease both;
 }
 
-/* --- Skeleton Loader --------------------------------------- */
 .skeleton {
   background: linear-gradient(
     90deg,
@@ -432,7 +415,6 @@ h4 {
   border-radius: var(--radius-sm);
 }
 
-/* --- Spinner ----------------------------------------------- */
 .spinner {
   width: 1.25rem;
   height: 1.25rem;
@@ -442,7 +424,6 @@ h4 {
   animation: spin 0.7s linear infinite;
 }
 
-/* --- Scrollbar --------------------------------------------- */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -461,7 +442,6 @@ h4 {
   background: var(--clr-muted);
 }
 
-/* --- Utility ----------------------------------------------- */
 .sr-only {
   position: absolute;
   width: 1px;

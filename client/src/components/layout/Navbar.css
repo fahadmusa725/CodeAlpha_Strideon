@@ -11,7 +11,6 @@
   border-bottom: 1px solid transparent;
 }
 
-/* Semi-transparent backdrop behind mobile menu */
 .navbar__backdrop {
   position: fixed;
   inset: 0;
@@ -102,7 +101,6 @@
   background: var(--clr-orange-glow);
 }
 
-/* Category pills in navbar */
 .navbar__category-pills {
   display: flex;
   align-items: center;
@@ -335,7 +333,6 @@
     border-color: var(--clr-orange);
   }
 
-  /* Animated hamburger → X */
   .hamburger-line {
     display: block;
     width: 18px;
@@ -359,13 +356,11 @@
     transform: translateY(-6px) rotate(-45deg);
   }
 
-  /* Mobile nav drawer */
   .navbar__links {
     position: fixed;
     top: var(--navbar-height, 80px);
     left: 0;
     right: 0;
-    /* Stretch to fill screen height below navbar */
     max-height: calc(100dvh - var(--navbar-height, 80px));
     overflow-y: auto;
     background: var(--clr-surface);
@@ -394,7 +389,6 @@
     pointer-events: all;
   }
 
-  /* Category pills in mobile drawer */
   .navbar__category-pills {
     display: flex;
     flex-wrap: wrap;

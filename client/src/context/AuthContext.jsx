@@ -10,7 +10,6 @@ export function AuthProvider({ children }) {
   });
   const [loading, setLoading] = useState(true);
 
-  // Verify token on mount
   useEffect(() => {
     const token = localStorage.getItem('strideon_token');
     if (!token) {

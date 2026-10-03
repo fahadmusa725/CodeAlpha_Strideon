@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
 
-/* ── Inline SVG social icons ─────────────────────────── */
 function InstagramIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -43,12 +42,10 @@ export default function Footer() {
 
   return (
     <footer className="footer">
-      {/* Accent top border */}
       <div className="footer__accent-bar" aria-hidden="true" />
 
       <div className="footer__main">
         <div className="container footer__inner">
-          {/* Brand Column */}
           <div className="footer__brand">
             <span className="footer__logo">STRIDEON</span>
             <p className="footer__tagline">
@@ -56,7 +53,6 @@ export default function Footer() {
               Move with intent.
             </p>
 
-            {/* Social icons */}
             <div className="footer__socials">
               <a href="#" className="footer__social-link" aria-label="Instagram" rel="noopener noreferrer">
                 <InstagramIcon />
@@ -70,7 +66,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Nav columns */}
           <div className="footer__links">
             <div className="footer__col">
               <h4 className="footer__col-heading">Shop</h4>
@@ -97,11 +92,10 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Newsletter */}
           <div className="footer__newsletter">
             <h4 className="footer__col-heading">Get Early Access</h4>
             <p className="footer__newsletter-desc">
-              Drop alerts, exclusive restocks, and members-only deals — straight to your inbox.
+              Drop alerts, exclusive restocks, and members-only deals, straight to your inbox.
             </p>
             {subscribed ? (
               <p className="footer__newsletter-success">
@@ -127,7 +121,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom bar */}
       <div className="footer__bottom">
         <div className="container footer__bottom-inner">
           <p className="footer__copy">

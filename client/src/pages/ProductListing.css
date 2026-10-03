@@ -32,7 +32,6 @@
   align-items: start;
 }
 
-/* Sidebar */
 .filters-sidebar {
   background: var(--clr-surface);
   border: 1px solid var(--clr-border);
@@ -152,7 +151,6 @@
   color: #fff;
 }
 
-/* Empty State */
 .empty-listing {
   padding: 5rem 2rem;
   text-align: center;

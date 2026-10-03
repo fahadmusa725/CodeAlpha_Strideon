@@ -35,7 +35,6 @@ export default function App() {
 
               <main className="main-content">
                 <Routes>
-                  {/* Public Storefront */}
                   <Route path="/" element={<Home />} />
                   <Route path="/products" element={<ProductListing />} />
                   <Route path="/products/:id" element={<ProductDetail />} />
@@ -45,7 +44,6 @@ export default function App() {
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
 
-                {/* Authenticated User */}
                 <Route
                   path="/checkout"
                   element={
@@ -63,7 +61,6 @@ export default function App() {
                   }
                 />
 
-                {/* Admin Routes */}
                 <Route
                   path="/admin"
                   element={

@@ -98,7 +98,6 @@ export default function AdminProducts() {
         const { data } = await api.put(`/products/${editingProduct._id}`, payload);
         setProducts(products.map((p) => (p._id === data._id ? data : p)));
       } else {
-        // build base variant stock map
         const stockMap = {};
         for (const cw of payload.colorways) {
           for (const sz of payload.sizes) {
@@ -175,7 +174,6 @@ export default function AdminProducts() {
         </div>
       )}
 
-      {/* Product Modal */}
       {modalOpen && (
         <div className="admin-modal-backdrop" onClick={() => setModalOpen(false)}>
           <div className="admin-modal" onClick={(e) => e.stopPropagation()}>

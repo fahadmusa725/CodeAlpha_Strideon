@@ -18,7 +18,7 @@ export function CartProvider({ children }) {
       const { data } = await api.get('/cart');
       setCart(data);
     } catch {
-      // silently fail — cart is non-critical on page load
+      // silently fail; cart is non-critical on page load
     }
   }, [user]);
 
