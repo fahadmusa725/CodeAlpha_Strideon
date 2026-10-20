@@ -31,10 +31,12 @@ const orderSchema = new mongoose.Schema(
     items: [orderItemSchema],
     shippingAddress: shippingSchema,
     subtotal: { type: Number, required: true },
+    shippingCost: { type: Number, required: true, default: 0 },
+    total: { type: Number, required: true },
     paymentStatus: {
       type: String,
       enum: ['Pending', 'Paid', 'Failed'],
-      default: 'Paid',
+      default: 'Pending',
     },
     paymentMethod: {
       type: String,
