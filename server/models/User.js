@@ -29,9 +29,16 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('passwordHash')) return next();
-  this.passwordHash = await bcrypt.hash(this.passwordHash, 12);
+userSchema
+  .virtual('password')
+  .set(function (value) {
+    this._plainPassword = value;
+  });
+
+userSchema.pre('validate', async function (next) {
+  if (this._plainPassword) {
+    this.passwordHash = await bcrypt.hash(this._plainPassword, 12);
+  }
   next();
 });
 

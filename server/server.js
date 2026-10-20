@@ -1,4 +1,15 @@
 require('dotenv').config();
+
+if (!process.env.JWT_SECRET) {
+  console.error('Fatal: JWT_SECRET environment variable is required');
+  process.exit(1);
+}
+
+if (!process.env.MONGO_URI) {
+  console.error('Fatal: MONGO_URI environment variable is required');
+  process.exit(1);
+}
+
 const express = require('express');
 const cors = require('cors');
 const connect = require('./config/db');
@@ -6,7 +17,8 @@ const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+const clientOrigin = process.env.CLIENT_URL || 'http://localhost:5173';
+app.use(cors({ origin: clientOrigin, credentials: true }));
 app.use(express.json());
 
 app.use('/api/auth', require('./routes/auth'));

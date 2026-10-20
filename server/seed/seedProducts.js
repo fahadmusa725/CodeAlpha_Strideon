@@ -310,7 +310,7 @@ async function seed() {
       await User.create({
         name: 'Strideon Admin',
         email: adminEmail,
-        passwordHash: adminPassword,
+        password: adminPassword,
         role: 'admin',
       });
       console.log(`Created admin user: ${adminEmail}`);
