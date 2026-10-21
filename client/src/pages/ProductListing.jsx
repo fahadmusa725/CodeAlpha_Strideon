@@ -23,6 +23,7 @@ export default function ProductListing() {
   const currentSort = searchParams.get('sort') || 'newest';
   const currentSize = searchParams.get('size') || '';
   const maxPriceParam = searchParams.get('maxPrice') || '';
+  const currentSearch = searchParams.get('q') || '';
 
   const [maxPrice, setMaxPrice] = useState(maxPriceParam || 250);
 
@@ -38,6 +39,7 @@ export default function ProductListing() {
       if (currentSort) params.set('sort', currentSort);
       if (currentSize) params.set('size', currentSize);
       if (maxPriceParam) params.set('maxPrice', maxPriceParam);
+      if (currentSearch) params.set('q', currentSearch);
 
       const { data } = await api.get(`/products?${params.toString()}`);
       setProducts(data.products || []);
@@ -68,20 +70,24 @@ export default function ProductListing() {
     setSearchParams({});
   };
 
+  const getPageTitle = () => {
+    if (currentSearch) return `Search results for "${currentSearch}"`;
+    if (currentCategory === 'All') return 'All products';
+    return `${currentCategory} collection`;
+  };
+
   return (
     <div className="product-listing container">
       <div className="product-listing__header">
         <div>
-          <h1 className="text-headline">
-            {currentCategory === 'All' ? 'All Sneaker Drops' : `${currentCategory} Collection`}
-          </h1>
+          <h1 className="text-headline">{getPageTitle()}</h1>
           <p className="text-muted text-sm" style={{ marginTop: '0.25rem' }}>
             Showing {loading ? '...' : products.length} of {total} products
           </p>
         </div>
 
         <div className="sort-wrapper">
-          <label htmlFor="sort-select" className="text-upper text-muted text-xs">Sort By</label>
+          <label htmlFor="sort-select" className="text-upper text-muted text-xs">Sort by</label>
           <select
             id="sort-select"
             className="form-select sort-select"
@@ -168,11 +174,10 @@ export default function ProductListing() {
             </div>
           ) : products.length === 0 ? (
             <div className="empty-listing">
-              <span className="empty-listing__icon">⚡</span>
-              <h3>No kicks match your filter criteria</h3>
-              <p className="text-muted">Try relaxing your price limits or switching categories.</p>
+              <h3>No products match your criteria</h3>
+              <p className="text-muted">Try clearing search terms or relaxing filter options.</p>
               <button className="btn btn-outline btn-sm" onClick={clearFilters}>
-                Clear All Filters
+                Clear filters
               </button>
             </div>
           ) : (

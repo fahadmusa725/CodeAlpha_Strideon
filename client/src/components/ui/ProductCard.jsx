@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { formatPrice } from '../../utils/formatters';
 import './ProductCard.css';
@@ -5,36 +6,48 @@ import './ProductCard.css';
 export default function ProductCard({ product }) {
   const { name, brand, price, images, slug, isFeatured, stock, colorways } = product;
 
+  const [primaryError, setPrimaryError] = useState(false);
+  const [hoverError, setHoverError] = useState(false);
+
   const totalStock = stock
     ? Object.values(
         typeof stock === 'object' && !(stock instanceof Map) ? stock : {}
       ).reduce((a, b) => a + b, 0)
     : null;
 
-  const isLowStock = totalStock !== null && totalStock > 0 && totalStock <= 15;
+  const isLowStock = totalStock !== null && totalStock > 0 && totalStock < 5;
   const isOutOfStock = totalStock === 0;
 
   return (
     <Link to={`/products/${slug}`} className="product-card" id={`product-${slug}`}>
-      <div className="product-card__image-wrap">
-        <img
-          src={images?.[0]}
-          alt={name}
-          className="product-card__img"
-          loading="lazy"
-        />
-        {images?.[1] && (
+      <div className={`product-card__image-wrap${images?.[1] && !hoverError ? ' has-hover-img' : ''}`}>
+        {!primaryError && images?.[0] ? (
+          <img
+            src={images[0]}
+            alt={name}
+            className="product-card__img"
+            loading="lazy"
+            decoding="async"
+            onError={() => setPrimaryError(true)}
+          />
+        ) : (
+          <div className="product-card__fallback">
+            <span className="product-card__fallback-text">{name}</span>
+          </div>
+        )}
+        {!hoverError && images?.[1] && !primaryError && (
           <img
             src={images[1]}
             alt={`${name} alt view`}
             className="product-card__img product-card__img--hover"
             loading="lazy"
+            decoding="async"
+            onError={() => setHoverError(true)}
           />
         )}
         <div className="product-card__badges">
-          {isFeatured && <span className="badge badge-orange">New Drop</span>}
-          {isLowStock && <span className="badge badge-warning">Low Stock</span>}
-          {isOutOfStock && <span className="badge badge-surface">Sold Out</span>}
+          {isLowStock && <span className="badge badge-warning">Low stock</span>}
+          {isOutOfStock && <span className="badge badge-surface">Sold out</span>}
         </div>
       </div>
 

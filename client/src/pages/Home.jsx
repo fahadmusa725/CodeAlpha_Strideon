@@ -6,218 +6,223 @@ import SkeletonCard from '../components/ui/SkeletonCard';
 import './Home.css';
 
 const CATEGORIES = [
-  { label: 'Running', emoji: '⚡', desc: 'Performance & Velocity', count: '14 Drops' },
-  { label: 'Basketball', emoji: '🏀', desc: 'Court Dominance & Grip', count: '18 Drops' },
-  { label: 'Lifestyle', emoji: '✦', desc: 'Underground Street Style', count: '26 Drops' },
-  { label: 'Skate', emoji: '🛹', desc: 'Reinforced Board Feel', count: '12 Drops' },
-];
-
-const PERKS = [
-  { icon: '🚀', title: 'FAST WORLDWIDE DISPATCH', desc: 'Orders packed within 24h' },
-  { icon: '🛡️', title: '100% VERIFIED AUTHENTIC', desc: 'Double checked by our sneaker lab' },
-  { icon: '🔄', title: '30-DAY EASY RETURNS', desc: 'Hassle-free size & color swaps' },
-  { icon: '🔥', title: 'EXCLUSIVE MEMBER DROPS', desc: 'Early access to rare colorways' },
+  { name: 'Running', label: 'Running' },
+  { name: 'Basketball', label: 'Basketball' },
+  { name: 'Lifestyle', label: 'Lifestyle' },
+  { name: 'Skate', label: 'Skate' },
 ];
 
 export default function Home() {
   const [featured, setFeatured] = useState([]);
+  const [categoryImages, setCategoryImages] = useState({});
+  const [categoryCounts, setCategoryCounts] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get('/products/featured')
-      .then(({ data }) => setFeatured(data))
+    let isMounted = true;
+
+    Promise.all([
+      api.get('/products/featured'),
+      api.get('/products?limit=100'),
+    ])
+      .then(([featuredRes, allRes]) => {
+        if (!isMounted) return;
+        const featList = featuredRes.data || [];
+        setFeatured(featList);
+
+        const allProducts = allRes.data?.products || [];
+        const catMap = {};
+        const countMap = {};
+
+        for (const cat of CATEGORIES) {
+          const matchingProducts = allProducts.filter((p) => p.category === cat.name);
+          countMap[cat.name] = matchingProducts.length;
+          const matchWithImage = matchingProducts.find((p) => p.images?.[0]);
+          if (matchWithImage) {
+            catMap[cat.name] = matchWithImage.images[0];
+          }
+        }
+        setCategoryImages(catMap);
+        setCategoryCounts(countMap);
+      })
       .catch(() => {})
-      .finally(() => setLoading(false));
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
+
+  const gridProducts = featured.slice(1, 9);
+  const promoProduct = featured[1] || featured[0] || null;
 
   return (
     <div className="home">
+      {/* 3. Hero: two columns */}
       <section className="hero">
-        <div className="hero__glow-sphere" aria-hidden="true" />
-        
-        <div className="hero__content container">
-          <div className="hero__badge-row">
-            <span className="badge badge-orange hero__live-pill">
-              <span className="pulse-dot" /> LIVE DROP // SS26
-            </span>
-            <span className="hero__tagline-sub">LIMITED PRODUCTION BATCH</span>
-          </div>
-
-          <h1 className="text-display hero__headline">
-            MOVE<br />
-            <span className="hero__headline--accent">DIFFERENTLY.</span>
-          </h1>
-
-          <p className="hero__sub">
-            Precision-engineered athletic kicks and curated streetwear grails. 
-            Elevating sneaker culture through authenticity, uncompromising design, and underground energy.
-          </p>
-
-          <div className="hero__ctas">
-            <Link to="/products" className="btn btn-primary btn-lg hero__cta-primary" id="hero-shop-btn">
-              <span>Shop All Drops</span>
-              <span className="btn-arrow">→</span>
-            </Link>
-            <Link to="/products?category=Lifestyle" className="btn btn-outline btn-lg hero__cta-secondary">
-              Explore Lifestyle
-            </Link>
-            <Link to="/about" className="btn btn-ghost btn-lg">
-              Our Story
-            </Link>
-          </div>
-
-          <div className="hero__stats-row">
-            <div className="hero-stat-item">
-              <strong>100%</strong>
-              <span>Verified Authentic</span>
-            </div>
-            <div className="hero-stat-divider" />
-            <div className="hero-stat-item">
-              <strong>24H</strong>
-              <span>Express Dispatch</span>
-            </div>
-            <div className="hero-stat-divider" />
-            <div className="hero-stat-item">
-              <strong>4.9★</strong>
-              <span>Community Rating</span>
+        <div className="container hero__inner">
+          <div className="hero__content">
+            <h1 className="hero__headline">Shoes for the track, the court and the street.</h1>
+            <p className="hero__sub">
+              Running, basketball, lifestyle and skate footwear, with stock tracked per size.
+            </p>
+            <div className="hero__ctas">
+              <Link to="/products" className="btn btn-primary btn-lg" id="hero-shop-btn">
+                Shop collection
+              </Link>
+              <Link to="/products?category=Basketball" className="btn btn-outline btn-lg">
+                Shop basketball
+              </Link>
             </div>
           </div>
-        </div>
 
-        <div className="hero__visual-wrap" aria-hidden="true">
-          <div className="hero__floating-card hero__floating-card--1">
-            <span className="floating-tag">NYC // SOHO</span>
-            <span className="floating-sub">Archive Drop 004</span>
+          <div className="hero__media-col">
+            <img
+              src="/products/hero.avif"
+              alt="White and red high-top sneakers on grass"
+              className="hero__image"
+              fetchpriority="high"
+            />
           </div>
-          <div className="hero__floating-card hero__floating-card--2">
-            <span className="floating-tag">✓ VERIFIED</span>
-            <span className="floating-sub">Authentic Guarantee</span>
-          </div>
-          <div className="hero__circle-graphic" />
-        </div>
-
-        <div className="hero__scroll-hint">
-          <span className="text-upper text-muted text-xs">Scroll to explore</span>
-          <div className="scroll-line" />
         </div>
       </section>
 
-      <section className="perks-strip">
-        <div className="container perks-grid">
-          {PERKS.map((perk, idx) => (
-            <div key={idx} className="perk-item">
-              <span className="perk-icon">{perk.icon}</span>
-              <div className="perk-info">
-                <h4 className="perk-title">{perk.title}</h4>
-                <p className="perk-desc">{perk.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
+      {/* 4. Category row: four image tiles */}
       <section className="section container">
         <div className="section-header">
           <div>
-            <div className="flex items-center gap-2" style={{ marginBottom: '0.5rem' }}>
-              <span className="badge badge-orange">Hot Right Now</span>
-              <span className="text-upper text-muted text-xs">Updated Daily</span>
-            </div>
-            <h2 className="text-headline">WHAT'S HOT RIGHT NOW</h2>
+            <h2 className="text-headline">Shop by category</h2>
           </div>
-          <Link to="/products" className="btn btn-outline btn-sm">
-            View All Drops ({featured.length || '8+'}) →
-          </Link>
-        </div>
-
-        <div className="grid-4" style={{ marginTop: '2.5rem' }}>
-          {loading
-            ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
-            : featured.slice(0, 8).map((p) => <ProductCard key={p._id} product={p} />)}
-        </div>
-      </section>
-
-      <section className="section container" style={{ paddingTop: '1rem' }}>
-        <div className="section-header" style={{ marginBottom: '2rem' }}>
-          <div>
-            <p className="text-upper text-orange" style={{ marginBottom: '0.25rem' }}>Curated Selections</p>
-            <h2 className="text-headline">SHOP BY DISCIPLINE</h2>
-          </div>
-          <Link to="/products" className="text-orange text-sm font-semibold">
-            All Categories →
+          <Link to="/products" className="text-sm font-semibold">
+            All categories
           </Link>
         </div>
 
         <div className="categories-grid">
-          {CATEGORIES.map((cat) => (
-            <Link
-              to={`/products?category=${cat.label}`}
-              key={cat.label}
-              className="category-card"
-              id={`cat-${cat.label.toLowerCase()}`}
-            >
-              <div className="category-card__header">
-                <span className="category-card__emoji">{cat.emoji}</span>
-                <span className="category-card__count">{cat.count}</span>
-              </div>
-              <h3 className="category-card__label">{cat.label}</h3>
-              <p className="category-card__desc text-sm">{cat.desc}</p>
-              <div className="category-card__action">
-                <span>Explore Series</span>
-                <span className="category-card__arrow">→</span>
-              </div>
-            </Link>
-          ))}
+          {CATEGORIES.map((cat) => {
+            const imgSrc = categoryImages[cat.name];
+            const count = categoryCounts[cat.name];
+            const countLabel =
+              typeof count === 'number'
+                ? `${count} ${count === 1 ? 'product' : 'products'}`
+                : '';
+            return (
+              <Link
+                to={`/products?category=${cat.name}`}
+                key={cat.name}
+                className="category-tile"
+                id={`cat-${cat.name.toLowerCase()}`}
+              >
+                <div className="category-tile__media">
+                  {imgSrc ? (
+                    <img
+                      src={imgSrc}
+                      alt={cat.label}
+                      className="category-tile__img"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <div className="category-tile__placeholder" />
+                  )}
+                </div>
+                <div className="category-tile__body">
+                  <h3 className="category-tile__title">{cat.label}</h3>
+                  {countLabel && (
+                    <span className="category-tile__link text-sm">{countLabel}</span>
+                  )}
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
-      <section className="section container" style={{ paddingTop: '1rem' }}>
-        <div className="editorial-banner">
-          <div className="editorial-banner__content">
-            <span className="badge badge-orange">Editorial Spotlight</span>
-            <h2 className="text-headline" style={{ marginTop: '1rem', fontSize: 'clamp(1.8rem, 4vw, 2.75rem)' }}>
-              THE UNDERGROUND<br />STREETWEAR ARCHIVE
-            </h2>
-            <p className="editorial-banner__desc">
-              Explore rare prototypes, deadstock heritage silhouettes, and artist collaborative colorways that defined modern sneaker culture.
+      {/* 5. Featured products grid */}
+      <section className="section container" style={{ paddingTop: '0' }}>
+        <div className="section-header">
+          <div>
+            <h2 className="text-headline">Featured products</h2>
+          </div>
+          <Link to="/products" className="btn btn-outline btn-sm">
+            View all
+          </Link>
+        </div>
+
+        <div className="grid-4" style={{ marginTop: '2rem' }}>
+          {loading
+            ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
+            : gridProducts.map((p) => <ProductCard key={p._id} product={p} />)}
+        </div>
+      </section>
+
+      {/* 6. Two promo banners side by side */}
+      <section className="section container" style={{ paddingTop: '0' }}>
+        <div className="promo-grid">
+          <div className="promo-card promo-card--shipping">
+            <span className="promo-card__eyebrow text-upper">Delivery benefit</span>
+            <h3 className="promo-card__title">Complimentary shipping on orders over $150</h3>
+            <p className="promo-card__desc">
+              Automatic free standard delivery applied at checkout across all orders.
             </p>
-            <div className="editorial-banner__actions">
-              <Link to="/products" className="btn btn-primary btn-lg">
-                Explore The Archive →
-              </Link>
-              <Link to="/about" className="btn btn-outline btn-lg">
-                Read The Manifesto
+            <div className="promo-card__action">
+              <Link to="/products" className="btn btn-primary btn-sm">
+                Shop all footwear
               </Link>
             </div>
           </div>
-          <div className="editorial-banner__art" aria-hidden="true">
-            <div className="art-box">
-              <span className="art-box__title">STRIDEON LAB</span>
-              <span className="art-box__code">BATCH // 0984-NYC</span>
-              <div className="art-box__specs">
-                <span>[HIGH TRACTION]</span>
-                <span>[PRO-FOAM CUSHION]</span>
-                <span>[BREATHABLE MESH]</span>
+
+          <div className="promo-card promo-card--category">
+            <div className="promo-card__content">
+              <span className="promo-card__eyebrow text-upper">Featured category</span>
+              <h3 className="promo-card__title">Lifestyle & court classics</h3>
+              <p className="promo-card__desc">
+                Everyday low-top and mid-top shoes for casual wear.
+              </p>
+              <div className="promo-card__action">
+                <Link to="/products?category=Lifestyle" className="btn btn-outline btn-sm">
+                  Explore Lifestyle
+                </Link>
               </div>
             </div>
+            {promoProduct && promoProduct.images?.[0] && (
+              <div className="promo-card__thumb">
+                <img
+                  src={promoProduct.images[0]}
+                  alt={promoProduct.name}
+                  className="promo-card__img"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            )}
           </div>
         </div>
       </section>
 
-      <div className="marquee-strip" aria-hidden="true">
-        <div className="marquee-track">
-          {['STRIDEON', 'AUTHENTIC ONLY', 'NEW DROPS', 'PREMIUM KICKS', 'STREET CULTURE', 'LIMITED PRODUCTION', 'MOVE DIFFERENT'].map(
-            (t, i) => (
-              <span key={i} className="marquee-item">{t} <span className="text-orange">·</span> </span>
-            )
-          )}
-          {['STRIDEON', 'AUTHENTIC ONLY', 'NEW DROPS', 'PREMIUM KICKS', 'STREET CULTURE', 'LIMITED PRODUCTION', 'MOVE DIFFERENT'].map(
-            (t, i) => (
-              <span key={`dup-${i}`} className="marquee-item">{t} <span className="text-orange">·</span> </span>
-            )
-          )}
+      {/* 7. Trust strip section */}
+      <section className="trust-strip-section container">
+        <div className="info-strip">
+          <div className="info-strip__inner">
+            <div className="info-strip__item">
+              <span className="info-strip__title">Free shipping</span>
+              <span className="info-strip__desc">Orders over $150 qualify for complimentary delivery</span>
+            </div>
+            <div className="info-strip__divider" />
+            <div className="info-strip__item">
+              <span className="info-strip__title">Secure checkout</span>
+              <span className="info-strip__desc">Encrypted payment processing powered by Stripe</span>
+            </div>
+            <div className="info-strip__divider" />
+            <div className="info-strip__item">
+              <span className="info-strip__title">Live inventory</span>
+              <span className="info-strip__desc">Stock tracked per size and colorway</span>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

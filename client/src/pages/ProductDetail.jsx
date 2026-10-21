@@ -20,6 +20,7 @@ export default function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState(null);
   const [adding, setAdding] = useState(false);
   const [addedMsg, setAddedMsg] = useState(false);
+  const [cartError, setCartError] = useState('');
 
   useEffect(() => {
     fetchProductDetails();
@@ -59,12 +60,13 @@ export default function ProductDetail() {
   const handleAddToCart = async () => {
     if (!selectedColor || !selectedSize) return;
     setAdding(true);
+    setCartError('');
     try {
       await addItem(product._id, selectedColor, selectedSize, 1);
       setAddedMsg(true);
       setTimeout(() => setAddedMsg(false), 3000);
     } catch (err) {
-      alert(err.response?.data?.message || 'Error adding to cart');
+      setCartError(err.response?.data?.message || 'Error adding to cart');
     } finally {
       setAdding(false);
     }
@@ -195,7 +197,12 @@ export default function ProductDetail() {
             </button>
             {addedMsg && (
               <p className="added-success-msg text-success text-sm text-center">
-                ✓ Added to bag!
+                Added to bag.
+              </p>
+            )}
+            {cartError && (
+              <p className="text-sm text-center" style={{ color: 'var(--clr-error)', marginTop: '0.5rem' }}>
+                {cartError}
               </p>
             )}
           </div>
