@@ -72,6 +72,26 @@ const createCheckoutSession = asyncHandler(async (req, res) => {
   const shippingCost = subtotal > 150 ? 0 : 15;
   const total = subtotal + shippingCost;
 
+  const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+
+  function resolveStripeImage(path) {
+    if (!path) return [];
+    try {
+      let url;
+      if (/^https?:\/\//i.test(path)) {
+        url = new URL(path);
+      } else {
+        url = new URL(path, clientUrl);
+      }
+      const host = url.hostname;
+      if (url.protocol !== 'https:') return [];
+      if (host === 'localhost' || host === '127.0.0.1' || host.endsWith('.localhost')) return [];
+      return [url.toString()];
+    } catch {
+      return [];
+    }
+  }
+
   if (stripe) {
     const line_items = items.map((item) => ({
       price_data: {
@@ -79,7 +99,7 @@ const createCheckoutSession = asyncHandler(async (req, res) => {
         product_data: {
           name: item.name,
           description: `${item.colorway} / Size ${item.size}`,
-          images: item.image ? [item.image] : [],
+          images: resolveStripeImage(item.image),
         },
         unit_amount: Math.round(item.price * 100),
       },
@@ -108,20 +128,26 @@ const createCheckoutSession = asyncHandler(async (req, res) => {
       paymentMethod: 'Stripe',
     });
 
-    const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items,
-      mode: 'payment',
-      customer_email: req.user.email,
-      success_url: `${clientUrl}/orders?session_id={CHECKOUT_SESSION_ID}&order_id=${order._id}`,
-      cancel_url: `${clientUrl}/checkout?canceled=true`,
-      metadata: {
-        orderId: order._id.toString(),
-        userId: req.user._id.toString(),
-      },
-    });
+
+    let session;
+    try {
+      session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items,
+        mode: 'payment',
+        customer_email: req.user.email,
+        success_url: `${clientUrl}/orders?session_id={CHECKOUT_SESSION_ID}&order_id=${order._id}`,
+        cancel_url: `${clientUrl}/checkout?canceled=true`,
+        metadata: {
+          orderId: order._id.toString(),
+          userId: req.user._id.toString(),
+        },
+      });
+    } catch (stripeErr) {
+      await Order.findByIdAndDelete(order._id);
+      throw stripeErr;
+    }
 
     order.stripeSessionId = session.id;
     await order.save();
