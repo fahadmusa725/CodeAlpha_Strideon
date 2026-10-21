@@ -43,7 +43,7 @@ export default function Login() {
           <Link to="/" className="auth-brand">STRIDEON</Link>
           <h1 className="auth-title">Welcome Back</h1>
           <p className="auth-subtitle text-muted text-sm">
-            Sign in to access your streetwear drops, cart, and orders.
+            Sign in to view your bag and orders.
           </p>
         </div>
 
@@ -58,7 +58,7 @@ export default function Login() {
               className="form-input"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              placeholder="alex@strideon.com"
+              placeholder="you@example.com"
               required
             />
           </div>

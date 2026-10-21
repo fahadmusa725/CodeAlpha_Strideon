@@ -86,38 +86,35 @@ export default function OrderHistory() {
     <div className="orders-page container">
       {(location.state?.newOrderPlaced || stripeSuccess) && (
         <div className="order-success-banner">
-          <span className="order-success-banner__icon">🎉</span>
           <div>
-            <h3>Payment Confirmed & Order Placed!</h3>
-            <p className="text-sm">Your order has been logged and is currently processing in our warehouse.</p>
+            <h3>Order confirmed</h3>
+            <p className="text-sm">Your order has been placed and is currently processing.</p>
           </div>
         </div>
       )}
 
       {verifyError && (
         <div className="order-success-banner" style={{ borderColor: 'var(--clr-warning)', background: 'rgba(245,158,11,0.08)' }}>
-          <span className="order-success-banner__icon">⚠️</span>
           <div>
-            <h3 style={{ color: 'var(--clr-warning)' }}>Payment verification encountered an issue</h3>
-            <p className="text-sm">Your payment may still have been processed. Please refresh in a moment or contact support if your order still shows as Pending.</p>
+            <h3 style={{ color: 'var(--clr-warning)' }}>Payment verification failed</h3>
+            <p className="text-sm">Your payment may still have processed. Refresh in a moment or contact support if the order still shows as Pending.</p>
           </div>
         </div>
       )}
 
       <div className="orders-page__header">
-        <h1 className="text-headline">Order History</h1>
-        <p className="text-muted text-sm">Review your past drops and track order statuses.</p>
+        <h1 className="text-headline">Your orders</h1>
+        <p className="text-muted text-sm">Review your orders and track their status.</p>
       </div>
 
       {loading ? (
         <div className="spinner" style={{ margin: '4rem auto' }} />
       ) : orders.length === 0 ? (
         <div className="orders-empty-state">
-          <span>📦</span>
-          <h3>No Orders Yet</h3>
-          <p className="text-muted">You haven't purchased any items yet.</p>
+          <h3>No orders yet</h3>
+          <p className="text-muted">You have not placed any orders.</p>
           <Link to="/products" className="btn btn-primary btn-sm" style={{ marginTop: '1rem' }}>
-            Start Shopping
+            Browse Products
           </Link>
         </div>
       ) : (
@@ -132,7 +129,7 @@ export default function OrderHistory() {
 
                 <div className="order-meta-col">
                   <span className="order-meta-label">Total</span>
-                  <span className="order-meta-value text-orange">{formatPrice(order.subtotal)}</span>
+                  <span className="order-meta-value text-orange">{formatPrice(order.total ?? order.subtotal)}</span>
                 </div>
 
                 <div className="order-meta-col">

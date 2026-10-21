@@ -48,7 +48,7 @@ export default function Register() {
           <Link to="/" className="auth-brand">STRIDEON</Link>
           <h1 className="auth-title">Create Account</h1>
           <p className="auth-subtitle text-muted text-sm">
-            Join the community for exclusive drops, early access, and faster checkout.
+            Create an account to save your bag and track orders.
           </p>
         </div>
 
@@ -76,7 +76,7 @@ export default function Register() {
               className="form-input"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              placeholder="alex@strideon.com"
+              placeholder="you@example.com"
               required
             />
           </div>

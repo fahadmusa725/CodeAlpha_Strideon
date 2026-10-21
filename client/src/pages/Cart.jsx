@@ -12,11 +12,10 @@ export default function Cart() {
   if (cart.items.length === 0) {
     return (
       <div className="cart-page-empty container">
-        <span className="cart-empty-icon">🛍️</span>
-        <h1 className="text-headline">Your Bag is Empty</h1>
-        <p className="text-muted">Explore the collection and grab your favorite drops.</p>
+        <h1 className="text-headline">Your bag is empty</h1>
+        <p className="text-muted">Explore the collection to add items to your bag.</p>
         <Link to="/products" className="btn btn-primary btn-lg" style={{ marginTop: '1rem' }}>
-          Discover Sneakers
+          Shop Products
         </Link>
       </div>
     );

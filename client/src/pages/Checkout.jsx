@@ -99,7 +99,7 @@ export default function Checkout() {
 
       {cancelNotice && (
         <div className="alert-error" style={{ marginBottom: '1.5rem', borderColor: 'var(--clr-accent)', color: 'var(--clr-accent)', background: 'rgba(255, 90, 31, 0.1)' }}>
-          ⚠️ Payment was canceled. You can modify your details and try again whenever you are ready.
+          Payment was canceled. You can modify your details and try again.
         </div>
       )}
 
@@ -203,7 +203,7 @@ export default function Checkout() {
             <h2 className="checkout-section-title">Payment Method</h2>
             <div className="simulated-payment-badge">
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                <span className="text-orange font-bold">💳 Stripe Secure Checkout</span>
+                <span className="text-orange font-bold">Stripe Secure Checkout</span>
                 <span className="badge badge-orange text-xs">Stripe 256-Bit SSL</span>
               </div>
               <p className="text-sm text-muted">
