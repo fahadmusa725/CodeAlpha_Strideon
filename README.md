@@ -1,8 +1,23 @@
 # Strideon
 
-Strideon is a footwear e-commerce app covering running, basketball, lifestyle and skate, built with the MERN stack (MongoDB, Express, React, Node.js). It includes a storefront, a cart, checkout with Stripe test mode, order history and an admin area.
+Footwear e-commerce application covering running, basketball, lifestyle and skate, built with the MERN stack.
+
+![React](https://img.shields.io/badge/React-19.2.8-61DAFB?style=flat)
+![Vite](https://img.shields.io/badge/Vite-8.3.0-646C9A?style=flat)
+![React Router](https://img.shields.io/badge/React_Router-7.18.4-CA4245?style=flat)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat)
+![Express](https://img.shields.io/badge/Express-4.19.2-000000?style=flat)
+![MongoDB](https://img.shields.io/badge/MongoDB_with_Mongoose-8.4.0-47A248?style=flat)
+![Stripe](https://img.shields.io/badge/Stripe-22.6.2-008CDD?style=flat)
+![JWT](https://img.shields.io/badge/JWT-9.0.2-000000?style=flat)
+
+**Live demo:** https://code-alpha-strideon-bg11.vercel.app
 
 Built during the CodeAlpha internship.
+
+## Overview
+
+Strideon is an online store specializing in athletic and lifestyle footwear across running, basketball, lifestyle and skate categories. Customers can search the catalog, filter by category, size or price, view stock per colorway and size, save items to a server-synced cart, and complete purchases using Stripe Checkout test mode or simulated checkout. An authenticated admin panel allows store operators to monitor performance metrics such as revenue, order volume, low-stock alerts and top-selling products, as well as manage inventory and update order fulfillment statuses.
 
 ## Features
 
@@ -13,13 +28,6 @@ Built during the CodeAlpha internship.
 - Register and login with JWT authentication
 - Order history
 - Admin dashboard with overview stats (revenue, orders, top products, low stock), product inventory management and order status updates
-
-## Tech Stack
-
-- **Backend:** Node.js, Express, MongoDB with Mongoose, JWT, bcryptjs
-- **Frontend:** React 19, Vite, React Router, Context API, Axios
-- **Payments:** Stripe Checkout
-- **Contact form:** EmailJS
 
 ## Project Structure
 
