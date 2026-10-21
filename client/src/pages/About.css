@@ -96,7 +96,7 @@
 }
 
 .pillar-card {
-  background: #ffffff;
+  background: var(--clr-surface);
   border: 1px solid var(--clr-border);
   border-radius: 12px;
   padding: 28px;
