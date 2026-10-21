@@ -1,21 +1,28 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import './Contact.css';
 
-export default function Contact() {
+const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: 'Order & Shipping',
-    message: '',
+    subject: 'Order status',
+    message: ''
   });
+
+  const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
     setLoading(true);
     setErrorMsg('');
 
@@ -23,185 +30,145 @@ export default function Contact() {
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-    try {
-      if (serviceId && templateId && publicKey && serviceId !== 'your_emailjs_service_id_here') {
-        await emailjs.send(
-          serviceId,
-          templateId,
-          {
-            name: formData.name,
-            email: formData.email,
-            inquiry_type: formData.subject,
-            message: formData.message,
-          },
-          publicKey
-        );
-      } else {
-        // Fallback simulation if placeholder keys are set
-        await new Promise((r) => setTimeout(r, 600));
-      }
+    if (!serviceId || !templateId || !publicKey) {
+      console.warn('EmailJS environment variables are not configured.');
+      setTimeout(() => {
+        setLoading(false);
+        setSubmitted(true);
+      }, 800);
+      return;
+    }
 
-      setSubmitted(true);
-      setFormData({ name: '', email: '', subject: 'Order & Shipping', message: '' });
-    } catch (err) {
-      console.error('EmailJS transmission error:', err);
-      setErrorMsg(err.text || 'Failed to transmit message. Please try again or reach out directly to support@strideon.com');
-    } finally {
+    try {
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: formData.name,
+          reply_to: formData.email,
+          inquiry_type: formData.subject,
+          message: formData.message,
+        },
+        publicKey
+      );
+
       setLoading(false);
+      setSubmitted(true);
+    } catch (err) {
+      console.error('EmailJS Error:', err);
+      setLoading(false);
+      setErrorMsg('Failed to send message. Please try again or reach out directly.');
     }
   };
 
   return (
-    <div className="contact-page container">
+    <div className="contact-page">
       <div className="contact-header">
-        <span className="badge badge-orange">Support & Inquiries</span>
-        <h1 className="text-headline">GET IN TOUCH WITH THE SQUAD</h1>
-        <p className="text-muted" style={{ marginTop: '0.5rem', maxWidth: '600px' }}>
-          Have a question about a drop, order status, sizing advice, or press partnerships? 
-          Drop us a line and our crew will get back to you within 24 hours.
+        <h1 className="contact-title">Contact us</h1>
+        <p className="contact-subtitle">
+          Questions about an order, sizing or a product? Send us a message and we will reply by email.
         </p>
       </div>
 
-      <div className="contact-layout">
-        <aside className="contact-info-panel">
-          <div className="contact-info-block">
-            <h3 className="contact-info-title">Headquarters</h3>
-            <p className="contact-info-text">
-              STRIDEON Flagship & HQ<br />
-              442 Broadway, Soho<br />
-              New York, NY 10013, USA
+      <div className="contact-form-card">
+        {submitted ? (
+          <div className="contact-success-state">
+            <div className="contact-success-icon">✓</div>
+            <h3>Message Sent</h3>
+            <p>
+              Thanks for reaching out. We will reply to your email shortly.
             </p>
+            <button 
+              className="btn btn-secondary"
+              onClick={() => {
+                setSubmitted(false);
+                setFormData({ name: '', email: '', subject: 'Order status', message: '' });
+              }}
+            >
+              Send another message
+            </button>
           </div>
+        ) : (
+          <>
+            {errorMsg && (
+              <div className="alert-banner alert-error" style={{ marginBottom: '1.5rem' }}>
+                {errorMsg}
+              </div>
+            )}
 
-          <div className="contact-info-block">
-            <h3 className="contact-info-title">Direct Channels</h3>
-            <p className="contact-info-text">
-              <strong>Support:</strong> support@strideon.com<br />
-              <strong>Press & Drops:</strong> press@strideon.com<br />
-              <strong>Direct Line:</strong> +1 (800) 555-STRIDE
-            </p>
-          </div>
-
-          <div className="contact-info-block">
-            <h3 className="contact-info-title">Operating Hours</h3>
-            <p className="contact-info-text">
-              Monday – Friday: 9:00 AM – 7:00 PM EST<br />
-              Saturday – Sunday: 10:00 AM – 5:00 PM EST
-            </p>
-          </div>
-
-          <div className="contact-faq-preview">
-            <h4>Quick Assistance</h4>
-            <p className="text-xs text-muted">
-              Looking for order tracking or returns? Check your order history in your account dashboard.
-            </p>
-          </div>
-        </aside>
-
-        <main className="contact-form-card">
-          {submitted ? (
-            <div className="contact-success-state">
-              <span className="contact-success-icon">⚡</span>
-              <h2 className="text-headline">MESSAGE RECEIVED</h2>
-              <p className="text-muted" style={{ maxWidth: '440px', margin: '0 auto' }}>
-                Thanks for reaching out. Our dispatch team has received your message and will respond to your email shortly.
-              </p>
-              <button
-                className="btn btn-outline btn-sm"
-                style={{ marginTop: '1.5rem' }}
-                onClick={() => setSubmitted(false)}
-              >
-                Send Another Message
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="contact-form" id="contact-form">
-              <h3 className="form-heading">Send a Transmission</h3>
-
-              {errorMsg && (
-                <div className="auth-alert" style={{ marginBottom: '1rem' }}>
-                  {errorMsg}
-                </div>
-              )}
-
+            <form id="contact-form" className="contact-form" onSubmit={handleSubmit}>
               <div className="form-group">
-                <label className="form-label" htmlFor="contact-name">
-                  Full Name
-                </label>
-                <input
-                  id="contact-name"
-                  type="text"
-                  required
-                  placeholder="e.g. Alex Rivera"
+                <label className="form-label" htmlFor="contact-name">Name</label>
+                <input 
+                  type="text" 
+                  id="contact-name" 
+                  name="name" 
                   className="form-input"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={handleChange}
+                  placeholder="Your full name" 
+                  required 
                 />
               </div>
 
               <div className="form-group">
-                <label className="form-label" htmlFor="contact-email">
-                  Email Address
-                </label>
-                <input
-                  id="contact-email"
-                  type="email"
-                  required
-                  placeholder="e.g. alex@domain.com"
+                <label className="form-label" htmlFor="contact-email">Email Address</label>
+                <input 
+                  type="email" 
+                  id="contact-email" 
+                  name="email" 
                   className="form-input"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={handleChange}
+                  placeholder="you@example.com" 
+                  required 
                 />
               </div>
 
               <div className="form-group">
-                <label className="form-label" htmlFor="contact-subject">
-                  Inquiry Topic
-                </label>
-                <select
-                  id="contact-subject"
+                <label className="form-label" htmlFor="contact-subject">Topic</label>
+                <select 
+                  id="contact-subject" 
+                  name="subject"
                   className="form-select"
                   value={formData.subject}
-                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                  onChange={handleChange}
                 >
-                  <option value="Order & Shipping">Order Tracking & Shipping</option>
-                  <option value="Sizing & Fit Advice">Sizing & Fit Advice</option>
-                  <option value="Product Authenticity">Product Authenticity / Verification</option>
-                  <option value="Returns & Exchanges">Returns & Exchanges</option>
-                  <option value="Collabs & Press">Brand Collaborations & Press</option>
+                  <option value="Order status">Order status</option>
+                  <option value="Sizing and fit">Sizing and fit</option>
+                  <option value="Product question">Product question</option>
                   <option value="Other">Other</option>
                 </select>
               </div>
 
               <div className="form-group">
-                <label className="form-label" htmlFor="contact-message">
-                  Message
-                </label>
-                <textarea
-                  id="contact-message"
-                  required
-                  rows={5}
-                  placeholder="Write your message here..."
-                  className="form-input"
-                  style={{ resize: 'vertical' }}
+                <label className="form-label" htmlFor="contact-message">Message</label>
+                <textarea 
+                  id="contact-message" 
+                  name="message" 
+                  className="form-input contact-textarea"
+                  rows="5"
                   value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                />
+                  onChange={handleChange}
+                  placeholder="Tell us how we can help..." 
+                  required 
+                ></textarea>
               </div>
 
-              <button
-                type="submit"
-                className="btn btn-primary btn-lg"
+              <button 
+                id="contact-submit-btn" 
+                type="submit" 
+                className="btn btn-primary btn-full btn-lg"
                 disabled={loading}
-                id="contact-submit-btn"
-                style={{ marginTop: '0.5rem' }}
               >
-                {loading ? <span className="spinner" /> : 'Transmit Message →'}
+                {loading ? <div className="spinner" /> : 'Send message'}
               </button>
             </form>
-          )}
-        </main>
+          </>
+        )}
       </div>
     </div>
   );
-}
+};
+
+export default Contact;
