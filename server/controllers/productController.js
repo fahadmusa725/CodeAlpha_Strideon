@@ -8,7 +8,7 @@ const ALLOWED_UPDATE_FIELDS = [
 ];
 
 const getProducts = asyncHandler(async (req, res) => {
-  const { category, minPrice, maxPrice, size, sort, page = 1, limit = 12 } = req.query;
+  const { category, minPrice, maxPrice, size, sort, q, page = 1, limit = 12 } = req.query;
   const filter = {};
 
   if (category) filter.category = category;
@@ -18,6 +18,12 @@ const getProducts = asyncHandler(async (req, res) => {
     if (maxPrice) filter.price.$lte = Number(maxPrice);
   }
   if (size) filter.sizes = Number(size);
+
+  if (q && q.trim()) {
+    const escaped = q.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escaped, 'i');
+    filter.$or = [{ name: regex }, { brand: regex }];
+  }
 
   let sortObj = { createdAt: -1 };
   if (sort === 'price_asc') sortObj = { price: 1 };
