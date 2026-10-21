@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -6,6 +6,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import CartDrawer from './components/layout/CartDrawer';
+import AdminLayout from './components/layout/AdminLayout';
 import { ProtectedRoute, AdminRoute } from './components/ui/RouteGuards';
 
 import Home from './pages/Home';
@@ -23,27 +24,36 @@ import AdminDashboard from './pages/admin/Dashboard';
 import AdminProducts from './pages/admin/Products';
 import AdminOrders from './pages/admin/Orders';
 
+function StorefrontLayout() {
+  return (
+    <div className="app-container" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <Navbar />
+      <CartDrawer />
+      <main className="main-content">
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <Router>
       <ThemeProvider>
         <AuthProvider>
           <CartProvider>
-            <div className="app-container" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-              <Navbar />
-              <CartDrawer />
-
-              <main className="main-content">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/products" element={<ProductListing />} />
-                  <Route path="/products/:id" element={<ProductDetail />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-
+            <Routes>
+              {/* Public & Customer Storefront */}
+              <Route element={<StorefrontLayout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/products" element={<ProductListing />} />
+                <Route path="/products/:id" element={<ProductDetail />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
                 <Route
                   path="/checkout"
                   element={
@@ -60,39 +70,26 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 />
+              </Route>
 
-                <Route
-                  path="/admin"
-                  element={
-                    <AdminRoute>
-                      <AdminDashboard />
-                    </AdminRoute>
-                  }
-                />
-                <Route
-                  path="/admin/products"
-                  element={
-                    <AdminRoute>
-                      <AdminProducts />
-                    </AdminRoute>
-                  }
-                />
-                <Route
-                  path="/admin/orders"
-                  element={
-                    <AdminRoute>
-                      <AdminOrders />
-                    </AdminRoute>
-                  }
-                />
-              </Routes>
-            </main>
-
-            <Footer />
-          </div>
-        </CartProvider>
-      </AuthProvider>
-    </ThemeProvider>
-  </Router>
-);
+              {/* Dedicated Admin Application Shell */}
+              <Route
+                path="/admin"
+                element={
+                  <AdminRoute>
+                    <AdminLayout />
+                  </AdminRoute>
+                }
+              >
+                <Route index element={<AdminDashboard />} />
+                <Route path="products" element={<AdminProducts />} />
+                <Route path="orders" element={<AdminOrders />} />
+              </Route>
+            </Routes>
+          </CartProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </Router>
+  );
 }
+
