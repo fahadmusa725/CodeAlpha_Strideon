@@ -93,16 +93,94 @@
 }
 
 @media (max-width: 860px) {
+  .footer {
+    padding-top: 48px;
+    padding-bottom: 24px;
+    margin-top: 48px;
+  }
+
   .footer__inner {
     grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
+    gap: 24px;
+    padding-bottom: 32px;
+  }
+
+  /* Brand block spans full width on top */
+  .footer__brand {
+    grid-column: 1 / -1;
   }
 }
 
-@media (max-width: 540px) {
+@media (max-width: 768px) {
+  .footer {
+    padding-top: 40px;
+    padding-bottom: 20px;
+    margin-top: 40px;
+  }
+
   .footer__inner {
-    grid-template-columns: 1fr;
-    gap: 32px;
+    /* brand on top, then 2-col for Shop + Account, then Help under */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto;
+    gap: 32px 20px;
+    padding-bottom: 28px;
+  }
+
+  /* Brand full-width row 1 */
+  .footer__brand {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  /* Shop col 1 row 2, Account col 2 row 2 */
+  .footer__col:nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .footer__col:nth-child(3) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  /* Help full-width row 3 */
+  .footer__col:nth-child(4) {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+
+  .footer__col-heading {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+
+  .footer__col {
+    gap: 0;
+  }
+
+  .footer__col a {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 4px 0;
+  }
+
+  /* Bottom bar: stack copyright and Stripe text, centered */
+  .footer__bottom {
+    padding: 1.5rem 0;
+  }
+
+  .footer__bottom-inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    text-align: center;
+  }
+
+  .footer__copy,
+  .footer__payments {
+    font-size: 12px;
   }
 }
-

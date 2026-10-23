@@ -313,12 +313,55 @@
     font-size: 0.6875rem;
   }
 
+  .navbar {
+    height: 64px;
+  }
+
+  .navbar__inner {
+    gap: 0.5rem;
+    justify-content: space-between;
+  }
+
+  .navbar__logo {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+
+  .navbar__logo-text {
+    font-size: 1.15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .navbar__actions {
+    gap: 0.35rem;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+
+  .navbar__icon-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    min-width: 40px;
+    min-height: 40px;
+  }
+
   .navbar__desktop-signin {
-    display: none;
+    display: none !important;
+  }
+
+  .user-menu--desktop {
+    display: none !important;
   }
 
   .navbar__hamburger {
     display: flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    min-width: 40px;
+    min-height: 40px;
+    flex-shrink: 0;
   }
 
   .navbar__links {

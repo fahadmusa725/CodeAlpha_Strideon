@@ -478,9 +478,22 @@ h4 {
 }
 
 @media (max-width: 768px) {
-  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .section { padding: 3rem 0; }
+  .section-sm { padding: 2rem 0; }
+  .container { padding: 0 1rem; }
+
+  /* Mobile tap targets */
+  .btn {
+    min-height: 44px;
+  }
+
+  .nav-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
 }
 
 @media (max-width: 580px) {

@@ -208,3 +208,23 @@
   text-align: center;
   margin-top: -0.5rem;
 }
+
+@media (max-width: 768px) {
+  .cart-drawer {
+    width: 100vw;
+    border-left: none;
+  }
+
+  .cart-drawer__header {
+    padding: 1.25rem 1rem;
+  }
+
+  .cart-drawer__close {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .cart-drawer__footer {
+    padding: 1.25rem 1rem;
+  }
+}

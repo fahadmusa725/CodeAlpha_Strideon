@@ -52,9 +52,10 @@ export default function Navbar() {
     };
   }, [menuOpen]);
 
-  // Close account dropdown on outside click, Escape, or route change.
+  // Close account dropdown and mobile menu on outside click, Escape, or route change.
   useEffect(() => {
     setUserMenuOpen(false);
+    setMenuOpen(false);
   }, [location.pathname, location.search]);
 
   useEffect(() => {
@@ -219,7 +220,7 @@ export default function Navbar() {
               </button>
 
               {user ? (
-                <div className="user-menu" ref={userMenuRef}>
+                <div className="user-menu user-menu--desktop" ref={userMenuRef}>
                   <button
                     className="navbar__icon-btn user-menu__trigger"
                     onClick={() => setUserMenuOpen((p) => !p)}
