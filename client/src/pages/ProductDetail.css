@@ -149,13 +149,13 @@
 }
 
 .size-choice-btn:hover:not(:disabled) {
-  border-color: var(--clr-orange);
+  border-color: var(--clr-primary);
 }
 
 .size-choice-btn--active {
-  background: var(--clr-orange);
-  border-color: var(--clr-orange);
-  color: #fff;
+  background: var(--clr-primary);
+  border-color: var(--clr-primary);
+  color: var(--clr-primary-text);
 }
 
 .size-choice-btn--out {

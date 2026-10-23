@@ -1,19 +1,31 @@
 /* Inter loaded in index.html */
 
 :root {
-  --clr-bg: #faf9f6;
-  --clr-surface: #ffffff;
-  --clr-surface-2: #f3f2ee;
-  --clr-border: #e6e5e0;
-  --clr-orange: #d9480f;
-  --clr-orange-dim: #b83c0a;
-  --clr-orange-glow: rgba(217, 72, 15, 0.08);
-  --clr-text: #191919;
-  --clr-text-secondary: #6e6d68;
-  --clr-muted: #999891;
-  --clr-success: #15803d;
-  --clr-error: #b91c1c;
-  --clr-warning: #b45309;
+  --clr-bg: #F6F4EF;
+  --clr-surface: #FFFFFF;
+  --clr-surface-2: #EFEBE3;
+  --clr-border: #E2DDD2;
+  --clr-orange: #C2410C;
+  --clr-orange-dim: #9A3412;
+  --clr-orange-glow: #FDEBDD;
+  --clr-text: #121A2B;
+  --clr-text-secondary: #4B5568;
+  --clr-muted: #5F6879;
+  --clr-success: #15803D;
+  --clr-error: #B91C1C;
+  --clr-warning: #B45309;
+
+  --clr-primary: #14213D;
+  --clr-primary-hover: #1D2E52;
+  --clr-primary-text: #FFFFFF;
+  --clr-accent: #C2410C;
+  --clr-accent-hover: #9A3412;
+  --clr-accent-soft: #FDEBDD;
+  --clr-accent-soft-text: #9A3412;
+  --clr-brand-soft: #E8ECF4;
+  --clr-ink: #0E1628;
+  --clr-ink-text: #E7EAF2;
+  --clr-ink-muted: #AEB7C9;
 
   --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -36,19 +48,31 @@
 }
 
 [data-theme="dark"] {
-  --clr-bg: #09090b;
-  --clr-surface: #121215;
-  --clr-surface-2: #18181b;
-  --clr-border: #27272a;
-  --clr-orange: #f97316;
-  --clr-orange-dim: #ea580c;
-  --clr-orange-glow: rgba(249, 115, 22, 0.1);
-  --clr-text: #fafafa;
-  --clr-text-secondary: #a1a1aa;
-  --clr-muted: #71717a;
-  --clr-success: #22c55e;
-  --clr-error: #ef4444;
-  --clr-warning: #f59e0b;
+  --clr-bg: #0E1320;
+  --clr-surface: #151C2C;
+  --clr-surface-2: #1C2538;
+  --clr-border: #27324A;
+  --clr-orange: #FF8A4C;
+  --clr-orange-dim: #FFA574;
+  --clr-orange-glow: #2B1B12;
+  --clr-text: #EEF1F7;
+  --clr-text-secondary: #B4BDCE;
+  --clr-muted: #8993A8;
+  --clr-success: #4ADE80;
+  --clr-error: #F87171;
+  --clr-warning: #FBBF24;
+
+  --clr-primary: #F6F4EF;
+  --clr-primary-hover: #FFFFFF;
+  --clr-primary-text: #0E1320;
+  --clr-accent: #FF8A4C;
+  --clr-accent-hover: #FFA574;
+  --clr-accent-soft: #2B1B12;
+  --clr-accent-soft-text: #FFA574;
+  --clr-brand-soft: #172036;
+  --clr-ink: #0A0F1A;
+  --clr-ink-text: #E7EAF2;
+  --clr-ink-muted: #AEB7C9;
 
   --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.4);
   --shadow-elevated: 0 4px 16px rgba(0, 0, 0, 0.5);
@@ -199,17 +223,27 @@ h4 {
   white-space: nowrap;
 }
 
+::selection {
+  background: var(--clr-orange-glow);
+  color: var(--clr-text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--clr-orange);
+  outline-offset: 2px;
+}
+
 .btn-primary {
-  background: var(--clr-text);
-  color: var(--clr-bg);
+  background: var(--clr-primary);
+  color: var(--clr-primary-text);
 }
 
 .btn-primary:hover {
-  background: #3f3f46;
+  background: var(--clr-primary-hover);
 }
 
 [data-theme="dark"] .btn-primary:hover {
-  background: #d4d4d8;
+  background: var(--clr-primary-hover);
 }
 
 .btn-accent {
@@ -286,7 +320,8 @@ h4 {
 }
 
 .form-input:focus {
-  outline: none;
+  outline: 2px solid var(--clr-orange);
+  outline-offset: 1px;
   border-color: var(--clr-orange);
 }
 
@@ -320,7 +355,8 @@ h4 {
 }
 
 .form-select:focus {
-  outline: none;
+  outline: 2px solid var(--clr-orange);
+  outline-offset: 1px;
   border-color: var(--clr-orange);
 }
 
@@ -343,8 +379,8 @@ h4 {
 }
 
 .badge-orange {
-  background: var(--clr-orange);
-  color: #fff;
+  background: var(--clr-orange-glow);
+  color: var(--clr-accent-soft-text);
 }
 
 .badge-surface {
@@ -353,17 +389,32 @@ h4 {
 }
 
 .badge-success {
-  background: rgba(34, 197, 94, 0.15);
+  background: rgba(21, 128, 61, 0.12);
+  color: var(--clr-success);
+}
+
+[data-theme="dark"] .badge-success {
+  background: rgba(74, 222, 128, 0.12);
   color: var(--clr-success);
 }
 
 .badge-warning {
-  background: rgba(245, 158, 11, 0.15);
+  background: rgba(180, 83, 9, 0.12);
+  color: var(--clr-warning);
+}
+
+[data-theme="dark"] .badge-warning {
+  background: rgba(251, 191, 36, 0.12);
   color: var(--clr-warning);
 }
 
 .badge-error {
-  background: rgba(239, 68, 68, 0.15);
+  background: rgba(185, 28, 28, 0.12);
+  color: var(--clr-error);
+}
+
+[data-theme="dark"] .badge-error {
+  background: rgba(248, 113, 113, 0.12);
   color: var(--clr-error);
 }
 

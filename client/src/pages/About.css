@@ -128,10 +128,15 @@
 /* Closing Band */
 .about-closing-band {
   width: 100%;
-  background: #0f0f11;
-  color: #ffffff;
+  background: var(--clr-ink);
+  color: var(--clr-ink-text);
   padding: 80px 24px;
   text-align: center;
+}
+
+[data-theme="dark"] .about-closing-band {
+  background: var(--clr-surface-2);
+  color: var(--clr-text);
 }
 
 .about-closing-inner {
@@ -149,7 +154,7 @@
 
 .about-closing-sub {
   font-size: 1.05rem;
-  color: #a1a1aa;
+  color: var(--clr-ink-muted);
   max-width: 600px;
   margin: 0 auto 2rem;
   line-height: 1.55;
@@ -164,7 +169,7 @@
 
 .about-btn-shop {
   background: #ffffff;
-  color: #0f0f11;
+  color: var(--clr-ink);
   border: 1px solid #ffffff;
   font-weight: 600;
   padding: 0.75rem 1.75rem;
@@ -174,7 +179,7 @@
 
 .about-btn-shop:hover {
   opacity: 0.9;
-  color: #0f0f11;
+  color: var(--clr-ink);
   transform: translateY(-1px);
 }
 
@@ -190,7 +195,7 @@
 
 .about-btn-contact:hover {
   background: #ffffff;
-  color: #0f0f11;
+  color: var(--clr-ink);
   transform: translateY(-1px);
 }
 

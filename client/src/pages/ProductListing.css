@@ -106,14 +106,15 @@
 }
 
 .filter-chip--active {
-  background: var(--clr-orange);
-  border-color: var(--clr-orange);
-  color: #fff;
+  background: var(--clr-primary);
+  border-color: var(--clr-primary);
+  color: var(--clr-primary-text);
 }
 
 .filter-chip--active:hover {
-  background: var(--clr-orange-dim);
-  color: #fff;
+  background: var(--clr-primary-hover);
+  border-color: var(--clr-primary-hover);
+  color: var(--clr-primary-text);
 }
 
 .price-range-slider {
@@ -194,9 +195,9 @@
 }
 
 .size-filter-btn--active {
-  background: var(--clr-orange);
-  border-color: var(--clr-orange);
-  color: #fff;
+  background: var(--clr-primary);
+  border-color: var(--clr-primary);
+  color: var(--clr-primary-text);
 }
 
 .empty-listing {

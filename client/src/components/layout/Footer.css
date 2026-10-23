@@ -2,17 +2,17 @@
   margin-top: 64px;
   position: relative;
   z-index: 10;
-  background: #0d0d10;
-  color: #f4f4f5;
-  border-top: 1px solid #232328;
+  background: var(--clr-ink);
+  color: var(--clr-ink-text);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding-top: 64px;
   padding-bottom: 32px;
 }
 
 [data-theme="dark"] .footer {
-  background: #09090b;
-  color: #f4f4f5;
-  border-top: 1px solid #1f1f23;
+  background: var(--clr-ink);
+  color: var(--clr-ink-text);
+  border-top: 1px solid var(--clr-border);
 }
 
 .footer__inner {
@@ -20,7 +20,6 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 32px;
   align-items: start;
-  padding-bottom: 40px;
 }
 
 .footer__brand {
@@ -40,7 +39,7 @@
 
 .footer__tagline {
   font-size: 0.875rem;
-  color: #a1a1aa;
+  color: var(--clr-ink-muted);
   line-height: 1.6;
 }
 
@@ -54,28 +53,29 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #71717a;
+  color: var(--clr-ink-muted);
   font-weight: 600;
   margin-bottom: 4px;
 }
 
 .footer__col a {
   font-size: 14px;
-  color: #a1a1aa;
+  color: var(--clr-ink-muted);
   transition: color var(--transition-fast);
 }
 
 .footer__col a:hover {
-  color: #fafafa;
+  color: #ffffff;
 }
 
 .footer__bottom {
+  margin-top: 40px;
   padding: 1.5rem 0;
-  border-top: 1px solid #232328;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 [data-theme="dark"] .footer__bottom {
-  border-top: 1px solid #1f1f23;
+  border-top: 1px solid var(--clr-border);
 }
 
 .footer__bottom-inner {
@@ -89,7 +89,7 @@
 .footer__copy,
 .footer__payments {
   font-size: 0.8125rem;
-  color: #71717a;
+  color: var(--clr-ink-muted);
 }
 
 @media (max-width: 860px) {
@@ -102,7 +102,6 @@
   .footer__inner {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
-    padding-bottom: 32px;
   }
 
   /* Brand block spans full width on top */
@@ -124,7 +123,6 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto auto;
     gap: 32px 20px;
-    padding-bottom: 28px;
   }
 
   /* Brand full-width row 1 */
@@ -168,9 +166,11 @@
   }
 
   /* Bottom bar: stack copyright and Stripe text, centered */
-  .footer__bottom {
-    padding: 1.5rem 0;
-  }
+ .footer__bottom {
+  margin-top: 40px;
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
 
   .footer__bottom-inner {
     flex-direction: column;

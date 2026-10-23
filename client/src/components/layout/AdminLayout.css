@@ -118,15 +118,15 @@
 
 .admin-nav-item--active,
 .admin-nav-item--active:hover {
-  background-color: rgba(217, 72, 15, 0.08);
-  color: var(--clr-orange);
+  background-color: var(--clr-primary);
+  color: var(--clr-primary-text);
   font-weight: 600;
 }
 
 [data-theme="dark"] .admin-nav-item--active,
 [data-theme="dark"] .admin-nav-item--active:hover {
-  background-color: rgba(249, 115, 22, 0.12);
-  color: var(--clr-orange);
+  background-color: var(--clr-primary);
+  color: var(--clr-primary-text);
 }
 
 .admin-sidebar__footer {

@@ -9,8 +9,8 @@
 }
 
 .topbar {
-  background: var(--clr-text);
-  color: var(--clr-bg);
+  background: var(--clr-ink);
+  color: var(--clr-ink-text);
   height: var(--topbar-height, 36px);
   display: flex;
   align-items: center;
@@ -19,8 +19,8 @@
 }
 
 [data-theme="dark"] .topbar {
-  background: #141417;
-  color: #d4d4d8;
+  background: var(--clr-ink);
+  color: var(--clr-ink-text);
   border-bottom: 1px solid var(--clr-border);
 }
 
@@ -48,7 +48,8 @@
 }
 
 [data-theme="dark"] .navbar {
-  background: rgba(9, 9, 11, 0.92);
+  background: var(--clr-bg);
+  border-bottom: 1px solid var(--clr-border);
 }
 
 .navbar--solid {

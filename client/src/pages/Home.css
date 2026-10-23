@@ -1,6 +1,6 @@
 .hero {
   border-bottom: 1px solid var(--clr-border);
-  background: var(--clr-surface);
+  background: var(--clr-brand-soft);
   padding: 4rem 0;
 }
 
