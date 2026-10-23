@@ -67,11 +67,13 @@ export default function CartDrawer() {
                 </Link>
               ) : (
                 <Link
-                  to="/login"
+                  to="/login?redirect=/checkout"
+                  state={{ from: { pathname: '/checkout' } }}
                   className="btn btn-primary btn-full btn-lg"
                   onClick={() => setDrawerOpen(false)}
+                  id="checkout-btn"
                 >
-                  Sign In to Checkout
+                  Checkout
                 </Link>
               )}
             </div>
@@ -84,10 +86,10 @@ export default function CartDrawer() {
 
 function CartItem({ item, onUpdate, onRemove }) {
   const product = item.product;
-  const name = typeof product === 'object' ? product?.name : 'Product';
-  const image = typeof product === 'object' ? product?.images?.[0] : '';
-  const slug = typeof product === 'object' ? product?.slug : '';
-  const productId = typeof product === 'object' ? product?._id : product;
+  const name = typeof product === 'object' && product !== null ? product?.name : (item.name || 'Product');
+  const image = typeof product === 'object' && product !== null ? product?.images?.[0] : (item.image || '');
+  const slug = typeof product === 'object' && product !== null ? product?.slug : (item.slug || '');
+  const productId = typeof product === 'object' && product !== null ? product?._id : (item.productId || product);
 
   return (
     <li className="cart-item">

@@ -14,7 +14,17 @@ export default function Login() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const from = location.state?.from?.pathname || '/';
+  const searchParams = new URLSearchParams(location.search);
+  const redirectParam = searchParams.get('redirect');
+  const fromState = location.state?.from;
+  const fromPath =
+    typeof fromState === 'object' && fromState !== null
+      ? (fromState.pathname || '') + (fromState.search || '')
+      : typeof fromState === 'string'
+      ? fromState
+      : '';
+  const from = redirectParam || fromPath || '/';
+  const isFromCheckout = from.startsWith('/checkout');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,9 +52,15 @@ export default function Login() {
         <div className="auth-card__header">
           <Link to="/" className="auth-brand">STRIDEON</Link>
           <h1 className="auth-title">Welcome Back</h1>
-          <p className="auth-subtitle text-muted text-sm">
-            Sign in to view your bag and orders.
-          </p>
+          {isFromCheckout ? (
+            <p className="auth-subtitle text-orange text-sm font-semibold">
+              Sign in to complete your order. Your bag is saved.
+            </p>
+          ) : (
+            <p className="auth-subtitle text-muted text-sm">
+              Sign in to view your bag and orders.
+            </p>
+          )}
         </div>
 
         {error && <div className="auth-alert">{error}</div>}
@@ -101,7 +117,11 @@ export default function Login() {
 
         <div className="auth-card__footer text-sm text-center">
           <span className="text-muted">Don't have an account? </span>
-          <Link to="/register" className="text-orange font-semibold">
+          <Link
+            to={from !== '/' ? `/register?redirect=${encodeURIComponent(from)}` : '/register'}
+            state={{ from }}
+            className="text-orange font-semibold"
+          >
             Create Account
           </Link>
         </div>

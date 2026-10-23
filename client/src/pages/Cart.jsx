@@ -6,7 +6,7 @@ import { formatPrice } from '../utils/formatters';
 import './Cart.css';
 
 export default function Cart() {
-  const { cart, cartSubtotal, updateItem, removeItem } = useContext(CartContext);
+  const { cart, cartSubtotal, updateItem, removeItem, mergeNotice } = useContext(CartContext);
   const { user } = useAuth();
 
   if (cart.items.length === 0) {
@@ -28,14 +28,31 @@ export default function Cart() {
     <div className="cart-page container">
       <h1 className="text-headline" style={{ marginBottom: '2rem' }}>Shopping Bag ({cart.items.length})</h1>
 
+      {mergeNotice && (
+        <div
+          className="cart-merge-notice"
+          style={{
+            marginBottom: '1.5rem',
+            padding: '1rem 1.25rem',
+            background: 'rgba(217, 72, 15, 0.1)',
+            border: '1px solid var(--clr-orange)',
+            borderRadius: 'var(--radius-sm)',
+            color: 'var(--clr-text)',
+            fontSize: '0.9rem',
+          }}
+        >
+          {mergeNotice}
+        </div>
+      )}
+
       <div className="cart-page__layout">
         <div className="cart-page__list">
           {cart.items.map((item, idx) => {
             const product = item.product;
-            const name = typeof product === 'object' ? product?.name : 'Product';
-            const image = typeof product === 'object' ? product?.images?.[0] : '';
-            const slug = typeof product === 'object' ? product?.slug : '';
-            const productId = typeof product === 'object' ? product?._id : product;
+            const name = typeof product === 'object' && product !== null ? product?.name : (item.name || 'Product');
+            const image = typeof product === 'object' && product !== null ? product?.images?.[0] : (item.image || '');
+            const slug = typeof product === 'object' && product !== null ? product?.slug : (item.slug || '');
+            const productId = typeof product === 'object' && product !== null ? product?._id : (item.productId || product);
 
             return (
               <div key={`${productId}-${item.colorway}-${item.size}-${idx}`} className="cart-page-item">
@@ -119,8 +136,13 @@ export default function Cart() {
               Proceed to Checkout
             </Link>
           ) : (
-            <Link to="/login" className="btn btn-primary btn-full btn-lg" style={{ marginTop: '1.5rem' }}>
-              Sign In to Checkout
+            <Link
+              to="/login?redirect=/checkout"
+              state={{ from: { pathname: '/checkout' } }}
+              className="btn btn-primary btn-full btn-lg"
+              style={{ marginTop: '1.5rem' }}
+            >
+              Proceed to Checkout
             </Link>
           )}
         </aside>

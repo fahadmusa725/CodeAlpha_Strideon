@@ -1,11 +1,23 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import './Auth.css';
 
 export default function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const searchParams = new URLSearchParams(location.search);
+  const redirectParam = searchParams.get('redirect');
+  const fromState = location.state?.from;
+  const fromPath =
+    typeof fromState === 'object' && fromState !== null
+      ? (fromState.pathname || '') + (fromState.search || '')
+      : typeof fromState === 'string'
+      ? fromState
+      : '';
+  const from = redirectParam || fromPath || '/';
 
   const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
   const [showPassword, setShowPassword] = useState(false);
@@ -33,7 +45,7 @@ export default function Register() {
 
     try {
       await register(formData.name, formData.email, formData.password);
-      navigate('/');
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to create account');
     } finally {
@@ -144,7 +156,11 @@ export default function Register() {
 
         <div className="auth-card__footer text-sm text-center">
           <span className="text-muted">Already have an account? </span>
-          <Link to="/login" className="text-orange font-semibold">
+          <Link
+            to={from !== '/' ? `/login?redirect=${encodeURIComponent(from)}` : '/login'}
+            state={{ from }}
+            className="text-orange font-semibold"
+          >
             Sign In
           </Link>
         </div>

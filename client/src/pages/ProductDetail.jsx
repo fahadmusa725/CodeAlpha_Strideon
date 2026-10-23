@@ -62,7 +62,7 @@ export default function ProductDetail() {
     setAdding(true);
     setCartError('');
     try {
-      await addItem(product._id, selectedColor, selectedSize, 1);
+      await addItem(product._id, selectedColor, selectedSize, 1, { product, stock: currentStock });
       setAddedMsg(true);
       setTimeout(() => setAddedMsg(false), 3000);
     } catch (err) {
