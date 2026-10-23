@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../api/axios';
 import { CartContext } from '../context/CartContext';
@@ -22,10 +22,31 @@ export default function ProductDetail() {
   const [addedMsg, setAddedMsg] = useState(false);
   const [cartError, setCartError] = useState('');
 
+  const [showStickyBar, setShowStickyBar] = useState(false);
+  const mainBtnRef = useRef(null);
+  const mobileGalleryRef = useRef(null);
+
   useEffect(() => {
     fetchProductDetails();
     window.scrollTo(0, 0);
   }, [id]);
+
+  // Monitor visibility of the original Add to bag button for mobile sticky bar
+  useEffect(() => {
+    const target = mainBtnRef.current;
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Sticky bar appears once original button scrolls out of view
+        setShowStickyBar(!entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [product, loading]);
 
   const fetchProductDetails = async () => {
     setLoading(true);
@@ -72,6 +93,23 @@ export default function ProductDetail() {
     }
   };
 
+  const handleMobileGalleryScroll = () => {
+    const el = mobileGalleryRef.current;
+    if (!el || !product?.images?.length) return;
+    const index = Math.round(el.scrollLeft / el.clientWidth);
+    if (index !== selectedImg && index >= 0 && index < product.images.length) {
+      setSelectedImg(index);
+    }
+  };
+
+  const scrollToImage = (i) => {
+    setSelectedImg(i);
+    const el = mobileGalleryRef.current;
+    if (el) {
+      el.scrollTo({ left: el.clientWidth * i, behavior: 'smooth' });
+    }
+  };
+
   if (loading) {
     return (
       <div className="container product-detail-loading" style={{ paddingTop: '8rem', minHeight: '60vh' }}>
@@ -99,20 +137,59 @@ export default function ProductDetail() {
 
       <div className="product-detail__grid">
         <div className="gallery-section">
-          <div className="gallery-main">
+          {/* Desktop single main image */}
+          <div className="gallery-main gallery-main--desktop">
             <img
               src={product.images?.[selectedImg] || product.images?.[0]}
               alt={product.name}
               className="gallery-main__img"
             />
           </div>
+
+          {/* Mobile swipeable image gallery with scroll snap */}
+          {product.images?.length > 1 ? (
+            <div className="gallery-mobile-wrapper">
+              <div
+                ref={mobileGalleryRef}
+                className="gallery-mobile-slider"
+                onScroll={handleMobileGalleryScroll}
+              >
+                {product.images.map((img, i) => (
+                  <div key={i} className="gallery-mobile-slide">
+                    <img src={img} alt={`${product.name} view ${i + 1}`} className="gallery-main__img" />
+                  </div>
+                ))}
+              </div>
+              <div className="gallery-mobile-dots">
+                {product.images.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    className={`gallery-mobile-dot ${selectedImg === i ? 'gallery-mobile-dot--active' : ''}`}
+                    onClick={() => scrollToImage(i)}
+                    aria-label={`Go to slide ${i + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="gallery-main gallery-main--mobile-single">
+              <img
+                src={product.images?.[0]}
+                alt={product.name}
+                className="gallery-main__img"
+              />
+            </div>
+          )}
+
+          {/* Desktop thumbnails */}
           {product.images?.length > 1 && (
             <div className="gallery-thumbs">
               {product.images.map((img, i) => (
                 <button
                   key={i}
                   className={`gallery-thumb ${selectedImg === i ? 'gallery-thumb--active' : ''}`}
-                  onClick={() => setSelectedImg(i)}
+                  onClick={() => scrollToImage(i)}
                 >
                   <img src={img} alt={`View ${i + 1}`} />
                 </button>
@@ -182,6 +259,7 @@ export default function ProductDetail() {
 
           <div className="product-actions" style={{ marginTop: '2rem' }}>
             <button
+              ref={mainBtnRef}
               className="btn btn-primary btn-lg btn-full"
               disabled={adding || currentStock <= 0}
               onClick={handleAddToCart}
@@ -206,6 +284,33 @@ export default function ProductDetail() {
               </p>
             )}
           </div>
+        </div>
+      </div>
+
+      {/* Mobile Sticky Bottom Bar (appears when main button is out of view) */}
+      <div className={`pdp-sticky-bar ${showStickyBar ? 'pdp-sticky-bar--visible' : ''}`}>
+        <div className="pdp-sticky-bar__inner">
+          <div className="pdp-sticky-bar__info">
+            <span className="pdp-sticky-bar__price">{formatPrice(product.price)}</span>
+            <span className="pdp-sticky-bar__meta">
+              {selectedSize ? `Size ${selectedSize}` : 'Choose size'}
+            </span>
+          </div>
+          <button
+            type="button"
+            className="btn btn-primary pdp-sticky-bar__btn"
+            disabled={adding || currentStock <= 0}
+            onClick={handleAddToCart}
+            id="mobile-sticky-add-btn"
+          >
+            {adding ? (
+              <div className="spinner" />
+            ) : currentStock <= 0 ? (
+              'Out of Stock'
+            ) : (
+              'Add to Bag'
+            )}
+          </button>
         </div>
       </div>
 

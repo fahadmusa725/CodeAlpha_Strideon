@@ -83,7 +83,7 @@ export default function Home() {
               src="/products/hero.avif"
               alt="White and red high-top sneakers on grass"
               className="hero__image"
-              fetchpriority="high"
+              fetchPriority="high"
             />
           </div>
         </div>
@@ -95,12 +95,12 @@ export default function Home() {
           <div>
             <h2 className="text-headline">Shop by category</h2>
           </div>
-          <Link to="/products" className="text-sm font-semibold">
-            All categories
+          <Link to="/products" className="text-sm font-semibold home-header-link">
+            View all
           </Link>
         </div>
 
-        <div className="categories-grid">
+        <div className="categories-grid categories-slider">
           {CATEGORIES.map((cat) => {
             const imgSrc = categoryImages[cat.name];
             const count = categoryCounts[cat.name];
@@ -146,12 +146,12 @@ export default function Home() {
           <div>
             <h2 className="text-headline">Featured products</h2>
           </div>
-          <Link to="/products" className="btn btn-outline btn-sm">
+          <Link to="/products" className="text-sm font-semibold home-header-link">
             View all
           </Link>
         </div>
 
-        <div className="grid-4" style={{ marginTop: '2rem' }}>
+        <div className="grid-4 featured-slider" style={{ marginTop: '2rem' }}>
           {loading
             ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
             : gridProducts.map((p) => <ProductCard key={p._id} product={p} />)}
