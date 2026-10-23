@@ -8,10 +8,39 @@ const ALLOWED_UPDATE_FIELDS = [
 ];
 
 const getProducts = asyncHandler(async (req, res) => {
-  const { category, minPrice, maxPrice, size, sort, q, page = 1, limit = 12 } = req.query;
+  const { category, minPrice, maxPrice, size, sort, q, brand, inStock, page = 1, limit = 12 } = req.query;
   const filter = {};
 
   if (category) filter.category = category;
+  if (brand && typeof brand === 'string' && brand.trim()) {
+    const brandList = brand
+      .split(',')
+      .map((b) => b.trim())
+      .filter(Boolean);
+    if (brandList.length === 1) {
+      const escaped = brandList[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      filter.brand = new RegExp(`^${escaped}$`, 'i');
+    } else if (brandList.length > 1) {
+      const escapedList = brandList.map((b) => b.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      filter.brand = { $in: escapedList.map((b) => new RegExp(`^${b}$`, 'i')) };
+    }
+  }
+  if (inStock === 'true') {
+    filter.$expr = {
+      $gt: [
+        {
+          $sum: {
+            $map: {
+              input: { $objectToArray: '$stock' },
+              as: 'entry',
+              in: '$$entry.v',
+            },
+          },
+        },
+        0,
+      ],
+    };
+  }
   if (minPrice || maxPrice) {
     filter.price = {};
     if (minPrice) filter.price.$gte = Number(minPrice);
