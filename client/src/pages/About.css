@@ -25,10 +25,12 @@
 }
 
 .about-hero__title {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
   font-size: 3.25rem;
   font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
+  line-height: 0.98;
+  letter-spacing: 0.01em;
   color: var(--clr-text);
   margin-bottom: 1.25rem;
 }
@@ -83,10 +85,13 @@
 }
 
 .about-section-title {
-  font-size: 1.5rem;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  font-size: 1.75rem;
   font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: 0.01em;
   color: var(--clr-text);
-  letter-spacing: -0.02em;
 }
 
 .about-pillars-grid {
@@ -145,11 +150,14 @@
 }
 
 .about-closing-title {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
   font-size: 2.25rem;
   font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: 0.01em;
   margin-bottom: 0.75rem;
   color: #ffffff;
-  letter-spacing: -0.02em;
 }
 
 .about-closing-sub {

@@ -114,7 +114,7 @@ export default function Navbar() {
         <header ref={navRef} className={`navbar ${scrolled ? 'navbar--solid' : ''}`}>
           <div className="container navbar__inner">
             <Link to="/" className="navbar__logo" onClick={() => setMenuOpen(false)}>
-              <span className="navbar__logo-text">Strideon</span>
+              <span className="navbar__logo-text">STRIDEON<span className="brand-dot">.</span></span>
             </Link>
 
             <nav className={`navbar__links ${menuOpen ? 'navbar__links--open' : ''}`}>

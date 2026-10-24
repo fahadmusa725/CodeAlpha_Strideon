@@ -97,6 +97,10 @@
 }
 
 @media (max-width: 900px) {
+  .checkout-page {
+    padding-top: 2rem; /* 32px mobile */
+  }
+
   .checkout-page__layout {
     grid-template-columns: 1fr;
   }

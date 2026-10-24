@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer__inner">
         <div className="footer__brand">
-          <span className="footer__logo">Strideon</span>
+          <span className="footer__logo">STRIDEON<span className="brand-dot">.</span></span>
           <p className="footer__tagline">
             Athletic and lifestyle footwear.
           </p>

@@ -80,12 +80,18 @@
 }
 
 .navbar__logo-text {
-  font-family: var(--font-heading);
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--clr-text);
+  line-height: 1;
   transition: color var(--transition-fast);
+}
+
+.navbar__logo-text .brand-dot {
+  color: var(--clr-orange);
 }
 
 .navbar__logo:hover .navbar__logo-text {

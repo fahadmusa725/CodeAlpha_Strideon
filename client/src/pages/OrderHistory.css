@@ -1,5 +1,5 @@
 .orders-page {
-  padding-top: 3.5rem;
+  padding-top: 3rem; /* 48px desktop */
   padding-bottom: 5rem;
   max-width: 960px;
 }
@@ -125,4 +125,10 @@
 .order-item-name {
   font-weight: 600;
   font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .orders-page {
+    padding-top: 2rem; /* 32px mobile */
+  }
 }

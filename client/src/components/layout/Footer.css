@@ -29,12 +29,17 @@
 }
 
 .footer__logo {
-  font-family: var(--font-heading);
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: #fafafa;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #FAFAFA;
   line-height: 1;
+}
+
+.footer__logo .brand-dot {
+  color: var(--clr-orange);
 }
 
 .footer__tagline {
