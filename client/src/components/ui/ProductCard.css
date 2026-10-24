@@ -16,9 +16,9 @@
 
 .product-card__image-wrap {
   position: relative;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
-  background: var(--clr-surface-2);
+  background: #EEECE7 !important;
 }
 
 .product-card__img {
@@ -85,8 +85,9 @@
 }
 
 .product-card__price {
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
   font-size: 1rem;
+  font-weight: 600;
   color: var(--clr-text);
 }
 
@@ -101,7 +102,7 @@
   align-items: center;
   justify-content: center;
   padding: 1.25rem;
-  background: var(--clr-surface-2);
+  background: #EEECE7;
   text-align: center;
 }
 

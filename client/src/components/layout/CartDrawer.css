@@ -94,17 +94,19 @@
 
 .cart-item__img {
   width: 72px;
-  height: 72px;
+  height: 90px;
+  aspect-ratio: 4 / 5;
   border-radius: var(--radius-sm);
   overflow: hidden;
   flex-shrink: 0;
-  background: var(--clr-border);
+  background: #EEECE7 !important;
 }
 
 .cart-item__img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .cart-item__info {
