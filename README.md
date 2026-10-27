@@ -11,7 +11,7 @@ Footwear e-commerce application covering running, basketball, lifestyle and skat
 ![Stripe](https://img.shields.io/badge/Stripe-22.6.2-008CDD?style=flat)
 ![JWT](https://img.shields.io/badge/JWT-9.0.2-000000?style=flat)
 
-**Live demo:** https://code-alpha-strideon-bg11.vercel.app
+**Live demo:** https://strideon-store.vercel.app
 
 Built during the CodeAlpha internship.
 
