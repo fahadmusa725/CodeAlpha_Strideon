@@ -28,6 +28,37 @@ Strideon is an online store specializing in athletic and lifestyle footwear acro
 - Register and login with JWT authentication
 - Order history
 - Admin dashboard with overview stats (revenue, orders, top products, low stock), product inventory management and order status updates
+- Light and dark theme toggle
+- About and Contact pages with contact form submissions handled via EmailJS
+- Skeleton loading cards for product grids
+- Route guards for authenticated and admin-only routes
+
+## Screenshots
+
+<table width="100%">
+  <tr>
+    <td align="center" valign="top" width="33.33%"><strong>Home</strong></td>
+    <td align="center" valign="top" width="33.33%"><strong>Shop</strong></td>
+    <td align="center" valign="top" width="33.33%"><strong>Product Detail (Dark Mode)</strong></td>
+  </tr>
+  <tr>
+    <td align="center" valign="top"><img src="docs/screenshots/01-home.png" width="100%" alt="Home"></td>
+    <td align="center" valign="top"><img src="docs/screenshots/02-shop.png" width="100%" alt="Shop"></td>
+    <td align="center" valign="top"><img src="docs/screenshots/03-product-detail.png" width="100%" alt="Product Detail (Dark Mode)"></td>
+  </tr>
+  <tr>
+    <td align="center" valign="top" width="33.33%"><strong>Checkout</strong></td>
+    <td align="center" valign="top" width="33.33%"><strong>Admin Dashboard</strong></td>
+    <td align="center" valign="top" width="33.33%"><strong>Mobile View</strong></td>
+  </tr>
+  <tr>
+    <td align="center" valign="top"><img src="docs/screenshots/04-cart-checkout.png" width="100%" alt="Checkout"></td>
+    <td align="center" valign="top"><img src="docs/screenshots/05-admin-dashboard.png" width="100%" alt="Admin Dashboard"></td>
+    <td align="center" valign="top"><img src="docs/screenshots/06-mobile-view.png" width="100%" alt="Mobile View"></td>
+  </tr>
+</table>
+
+The screenshots show seeded demo data from the seed script (server/seed).
 
 ## Project Structure
 
