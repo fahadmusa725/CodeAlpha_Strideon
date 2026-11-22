@@ -40,10 +40,6 @@ export default function AdminOrders() {
     setTimeout(() => setToast(null), 3000);
   };
 
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
   const fetchOrders = async () => {
     setLoading(true);
     setError('');
@@ -56,6 +52,10 @@ export default function AdminOrders() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {

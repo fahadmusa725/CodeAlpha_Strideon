@@ -27,6 +27,24 @@ export default function ProductDetail() {
   const mobileGalleryRef = useRef(null);
 
   useEffect(() => {
+    const fetchProductDetails = async () => {
+      setLoading(true);
+      setError('');
+      try {
+        const { data } = await api.get(`/products/${id}`);
+        setProduct(data);
+        if (data.colorways?.length) setSelectedColor(data.colorways[0]);
+        if (data.sizes?.length) setSelectedSize(data.sizes[0]);
+
+        const relRes = await api.get(`/products?category=${data.category}&limit=3`);
+        setRelated(relRes.data.products.filter((p) => p._id !== data._id));
+      } catch (err) {
+        setError(err.response?.data?.message || 'Product not found');
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchProductDetails();
     window.scrollTo(0, 0);
   }, [id]);
@@ -47,24 +65,6 @@ export default function ProductDetail() {
     observer.observe(target);
     return () => observer.disconnect();
   }, [product, loading]);
-
-  const fetchProductDetails = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      const { data } = await api.get(`/products/${id}`);
-      setProduct(data);
-      if (data.colorways?.length) setSelectedColor(data.colorways[0]);
-      if (data.sizes?.length) setSelectedSize(data.sizes[0]);
-
-      const relRes = await api.get(`/products?category=${data.category}&limit=3`);
-      setRelated(relRes.data.products.filter((p) => p._id !== data._id));
-    } catch (err) {
-      setError(err.response?.data?.message || 'Product not found');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const getStockCount = (color, size) => {
     if (!product?.stock) return 0;

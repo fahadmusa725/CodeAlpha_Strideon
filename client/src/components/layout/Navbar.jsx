@@ -14,7 +14,23 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const urlSearchQuery = location.pathname === '/products' ? (new URLSearchParams(location.search).get('q') || '') : '';
+  const [searchQuery, setSearchQuery] = useState(urlSearchQuery);
+  const [prevUrlQuery, setPrevUrlQuery] = useState(urlSearchQuery);
+
+  if (prevUrlQuery !== urlSearchQuery) {
+    setPrevUrlQuery(urlSearchQuery);
+    setSearchQuery(urlSearchQuery);
+  }
+
+  const routeKey = `${location.pathname}${location.search}`;
+  const [prevRouteKey, setPrevRouteKey] = useState(routeKey);
+  if (prevRouteKey !== routeKey) {
+    setPrevRouteKey(routeKey);
+    setUserMenuOpen(false);
+    setMenuOpen(false);
+  }
+
   const navRef = useRef(null);
   const userMenuRef = useRef(null);
 
@@ -23,14 +39,6 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const q = params.get('q') || '';
-    if (location.pathname === '/products') {
-      setSearchQuery(q);
-    }
-  }, [location.pathname, location.search]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -51,12 +59,6 @@ export default function Navbar() {
       document.removeEventListener('keydown', handleEscape);
     };
   }, [menuOpen]);
-
-  // Close account dropdown and mobile menu on outside click, Escape, or route change.
-  useEffect(() => {
-    setUserMenuOpen(false);
-    setMenuOpen(false);
-  }, [location.pathname, location.search]);
 
   useEffect(() => {
     if (!userMenuOpen) return;

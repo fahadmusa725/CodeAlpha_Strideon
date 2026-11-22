@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import api from '../api/axios';
@@ -23,13 +23,7 @@ export default function Checkout() {
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [orderError, setOrderError] = useState('');
-  const [cancelNotice, setCancelNotice] = useState(false);
-
-  useEffect(() => {
-    if (searchParams.get('canceled')) {
-      setCancelNotice(true);
-    }
-  }, [searchParams]);
+  const cancelNotice = Boolean(searchParams.get('canceled'));
 
   if (cart.items.length === 0) {
     return (
